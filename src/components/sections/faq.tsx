@@ -1,7 +1,122 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { FeatureBadge } from "@/components/ui/feature-badge";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const, delay },
+  }),
+};
+
+const faqs = [
+  {
+    question: "Do I need to create an account?",
+    answer:
+      "No. Download Corki and start asking immediately. You get 10 free messages before you need to do anything.",
+  },
+  {
+    question: "How does the label scanner work?",
+    answer:
+      "Point your camera at any wine label. Corki uses AI vision to identify the wine and generate a full response — tasting notes, region info, pairing suggestions — in seconds.",
+  },
+  {
+    question: "What's the difference between free and Corki Pro?",
+    answer:
+      "The free tier gives you 10 messages all-time to try the product. Corki Pro unlocks unlimited conversations, label scans, full chat history, cellar management, and all seven premium themes.",
+  },
+  {
+    question: "Is this just ChatGPT with a wine skin?",
+    answer:
+      "Corki is built on top of OpenAI's models, but it's not just a wrapper. The difference is context. Corki remembers your previous conversations, knows what's in your cellar, and learns your taste over time. ChatGPT doesn't remember your last 50 wines. Corki does.",
+  },
+  {
+    question: "What phones does it work on?",
+    answer:
+      "iOS — iPhone and iPad. Android and web versions are in development.",
+  },
+  {
+    question: "Can I cancel my subscription anytime?",
+    answer:
+      "Yes. Subscriptions are managed through your Apple ID, and you can cancel anytime from your device's subscription settings.",
+  },
+  {
+    question: "Is there a wine database behind Corki?",
+    answer:
+      "Corki uses AI to answer wine questions — it's conversational, not a lookup database. This means it handles questions databases can't: 'Is this wine worth it for the occasion?' / 'What does my partner usually enjoy?'",
+  },
+];
+
 export function FAQ() {
   return (
-    <section id="faq" className="relative">
-      {/* TODO: implement */}
+    <section
+      id="faq"
+      className="relative section-padding overflow-hidden"
+      style={{ backgroundColor: "#F9F6F4" }}
+    >
+      <div className="relative z-10 flex flex-col items-center px-6 max-w-2xl mx-auto">
+        {/* Badge */}
+        <motion.div
+          custom={0}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="mb-8"
+        >
+          <FeatureBadge>Questions</FeatureBadge>
+        </motion.div>
+
+        {/* Accordion */}
+        <motion.div
+          custom={0.1}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="w-full"
+        >
+          <Accordion
+            className="w-full"
+            style={
+              {
+                "--accordion-border": "rgba(123,51,70,0.15)",
+              } as React.CSSProperties
+            }
+          >
+            {faqs.map((faq, i) => (
+              <AccordionItem
+                key={i}
+                value={String(i)}
+                className="border-b last:border-b-0"
+                style={{ borderColor: "rgba(123,51,70,0.15)" }}
+              >
+                <AccordionTrigger
+                  className="py-5 text-left text-base font-medium font-[family-name:var(--font-body)] hover:no-underline hover:text-amber-light transition-colors duration-200"
+                  style={{ color: "#120D0A" }}
+                >
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent
+                  className="text-sm leading-relaxed font-[family-name:var(--font-body)] pb-5"
+                  style={{ color: "#6B6460" }}
+                >
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
+      </div>
     </section>
   );
 }
