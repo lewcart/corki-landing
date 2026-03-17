@@ -17,7 +17,7 @@ const fadeUp: Variants = {
 export function FinalCTA() {
   return (
     <section
-      id="final-cta"
+      id="download"
       className="relative overflow-hidden bg-dark-base section-padding"
       style={{
         background:
