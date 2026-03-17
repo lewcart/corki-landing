@@ -117,7 +117,7 @@ export function HowItWorks() {
                   <div className="relative mb-6 flex items-center justify-center w-[6.5rem] h-[6.5rem]">
                     {/* Large semi-transparent step number */}
                     <span
-                      className="absolute font-[family-name:var(--font-heading)] select-none leading-none"
+                      className="absolute z-20 font-[family-name:var(--font-heading)] select-none leading-none"
                       style={{
                         fontSize: "5.5rem",
                         fontWeight: 500,

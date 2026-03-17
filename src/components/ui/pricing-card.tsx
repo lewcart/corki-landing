@@ -30,7 +30,7 @@ export function PricingCard({
   return (
     <div
       className={cn(
-        "relative flex flex-col rounded-2xl p-7 transition-transform duration-300 hover:-translate-y-1",
+        "relative flex flex-col h-full rounded-2xl p-7 transition-transform duration-300 hover:-translate-y-1",
         className
       )}
       style={

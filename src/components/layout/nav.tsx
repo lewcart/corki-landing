@@ -55,7 +55,7 @@ export function Nav() {
             : undefined
         }
       >
-        <nav className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+        <nav className="max-w-6xl mx-auto px-6 grid grid-cols-[1fr_auto_1fr] items-center">
           {/* Wordmark */}
           <a
             href="/"
@@ -65,7 +65,7 @@ export function Nav() {
             Corki
           </a>
 
-          {/* Desktop nav */}
+          {/* Desktop nav — always centred */}
           <ul className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <li key={item.label}>
@@ -86,30 +86,28 @@ export function Nav() {
             ))}
           </ul>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:block">
+          {/* Desktop CTA + Mobile hamburger (shared right column) */}
+          <div className="flex justify-end">
             <a
               href="#download"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium font-body transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium font-body transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
               style={{
                 background: "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)",
                 color: "#120D0A",
                 boxShadow: "0 4px 16px rgba(194,123,46,0.3)",
               }}
             >
-              Download on App Store
+              Download Now
             </a>
+            <button
+              className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl transition-colors"
+              style={{ color: "#A39B95" }}
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl transition-colors"
-            style={{ color: "#A39B95" }}
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
         </nav>
       </header>
 
@@ -196,7 +194,7 @@ export function Nav() {
                   }}
                   onClick={() => setMenuOpen(false)}
                 >
-                  Download on App Store
+                  Download Now
                 </a>
               </div>
             </motion.div>

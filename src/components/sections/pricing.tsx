@@ -34,7 +34,7 @@ const proFeatures: PricingFeature[] = [
 ];
 
 export function Pricing() {
-  const [isAnnual, setIsAnnual] = useState(false);
+  const [isAnnual, setIsAnnual] = useState(true);
 
   return (
     <section
@@ -121,8 +121,8 @@ export function Pricing() {
             }}
           >
             <motion.span
-              className="absolute top-0.5 w-5 h-5 rounded-full bg-cream shadow-sm"
-              animate={{ x: isAnnual ? 24 : 2 }}
+              className="absolute top-px w-5 h-5 rounded-full bg-cream shadow-sm"
+              animate={{ x: isAnnual ? 25 : 2 }}
               transition={{ type: "spring", stiffness: 500, damping: 35 }}
             />
           </button>
@@ -165,24 +165,29 @@ export function Pricing() {
             ctaText="Download free"
           />
 
-          {/* Pro card — wrapper to add the RECOMMENDED badge and billing note */}
-          <div className="flex flex-col gap-3">
-            <PricingCard
-              name="Corki Pro"
-              price={isAnnual ? "$49.99" : "$5.99"}
-              period={isAnnual ? "/ year" : "/ month"}
-              features={proFeatures}
-              highlighted={true}
-              ctaText="Start Corki Pro"
-            />
-            <p
-              className="text-center text-xs font-[family-name:var(--font-body)]"
-              style={{ color: "#6B6460" }}
-            >
-              Cancel anytime · Billed via App Store
-            </p>
-          </div>
+          {/* Pro card */}
+          <PricingCard
+            name="Corki Pro"
+            price={isAnnual ? "$49.99" : "$5.99"}
+            period={isAnnual ? "/ year" : "/ month"}
+            features={proFeatures}
+            highlighted={true}
+            ctaText="Start Corki Pro"
+          />
         </motion.div>
+
+        {/* Billing note */}
+        <motion.p
+          custom={0.45}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="mt-4 text-center text-xs font-[family-name:var(--font-body)]"
+          style={{ color: "#6B6460" }}
+        >
+          Cancel anytime · Billed via App Store
+        </motion.p>
 
         {/* Footer note */}
         <motion.p
