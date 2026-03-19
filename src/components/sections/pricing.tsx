@@ -163,6 +163,7 @@ export function Pricing() {
             features={freeFeatures}
             highlighted={false}
             ctaText="Join the Waitlist"
+            ctaHref="#waitlist"
           />
 
           {/* Pro card */}
@@ -173,6 +174,7 @@ export function Pricing() {
             features={proFeatures}
             highlighted={true}
             ctaText="Join the Waitlist"
+            ctaHref="#waitlist"
           />
         </motion.div>
 
