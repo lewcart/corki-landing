@@ -162,7 +162,7 @@ export function Pricing() {
             price="$0"
             features={freeFeatures}
             highlighted={false}
-            ctaText="Download free"
+            ctaText="Join the Waitlist"
           />
 
           {/* Pro card */}
@@ -172,7 +172,7 @@ export function Pricing() {
             period={isAnnual ? "/ year" : "/ month"}
             features={proFeatures}
             highlighted={true}
-            ctaText="Start Corki Pro"
+            ctaText="Join the Waitlist"
           />
         </motion.div>
 
@@ -187,6 +187,19 @@ export function Pricing() {
           style={{ color: "#6B6460" }}
         >
           Cancel anytime · Billed via App Store
+        </motion.p>
+
+        {/* Launch note */}
+        <motion.p
+          custom={0.48}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="mt-2 text-center text-xs font-[family-name:var(--font-body)]"
+          style={{ color: "#9C4B61" }}
+        >
+          Launching soon · Prices lock in for waitlist members
         </motion.p>
 
         {/* Footer note */}

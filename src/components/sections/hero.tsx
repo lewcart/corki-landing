@@ -79,6 +79,31 @@ export function Hero() {
           <Orb size="hero" />
         </motion.div>
 
+        {/* Coming Soon pill */}
+        <motion.div
+          custom={0.0}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          className="mb-3"
+        >
+          <span
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full font-[family-name:var(--font-body)] text-xs font-semibold uppercase"
+            style={{
+              background: "rgba(123,51,70,0.15)",
+              color: "#9C4B61",
+              border: "1px solid rgba(123,51,70,0.3)",
+              letterSpacing: "0.12em",
+            }}
+          >
+            <span
+              className="w-1.5 h-1.5 rounded-full animate-pulse"
+              style={{ background: "#9C4B61" }}
+            />
+            Coming Soon
+          </span>
+        </motion.div>
+
         {/* Badge */}
         <motion.div
           custom={0.1}
@@ -130,26 +155,17 @@ export function Hero() {
           className="flex flex-col items-center gap-4"
         >
           <a
-            href="#download"
+            href="#waitlist"
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-[family-name:var(--font-body)] font-semibold text-[0.9375rem] text-[#120D0A] transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
             style={{
               background: "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)",
               boxShadow: "0 4px 20px rgba(194,123,46,0.35)",
             }}
           >
-            <svg
-              aria-hidden="true"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-            </svg>
-            Download on App Store
+            Join the Waitlist
           </a>
           <p className="text-smoke font-[family-name:var(--font-body)] text-sm">
-            Free to try&nbsp;·&nbsp;No account needed
+            Be first to know when we launch
           </p>
         </motion.div>
       </div>

@@ -89,7 +89,7 @@ export function Nav() {
           {/* Desktop CTA + Mobile hamburger (shared right column) */}
           <div className="flex justify-end">
             <a
-              href="#download"
+              href="#waitlist"
               className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium font-body transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
               style={{
                 background: "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)",
@@ -97,7 +97,7 @@ export function Nav() {
                 boxShadow: "0 4px 16px rgba(194,123,46,0.3)",
               }}
             >
-              Download Now
+              Join the Waitlist
             </a>
             <button
               className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl transition-colors"
@@ -185,7 +185,7 @@ export function Nav() {
               {/* Drawer CTA */}
               <div className="px-6 py-6 border-t" style={{ borderColor: "rgba(123,51,70,0.15)" }}>
                 <a
-                  href="#download"
+                  href="#waitlist"
                   className="block w-full text-center py-3.5 rounded-xl text-sm font-medium font-body transition-all"
                   style={{
                     background: "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)",
@@ -194,7 +194,7 @@ export function Nav() {
                   }}
                   onClick={() => setMenuOpen(false)}
                 >
-                  Download Now
+                  Join the Waitlist
                 </a>
               </div>
             </motion.div>
