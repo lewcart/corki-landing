@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const sql = getDb();
-    await sql.unsafe(CREATE_TABLE_SQL);
+    await sql.query(CREATE_TABLE_SQL);
 
     await sql`
       INSERT INTO waitlist_signups (email, source, referrer)
@@ -63,7 +63,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const sql = getDb();
-    await sql.unsafe(CREATE_TABLE_SQL);
+    await sql.query(CREATE_TABLE_SQL);
 
     const rows = await sql`
       SELECT id, email, source, referrer, signed_up
