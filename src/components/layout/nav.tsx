@@ -55,7 +55,7 @@ export function Nav() {
             : undefined
         }
       >
-        <nav className="max-w-6xl mx-auto px-6 grid grid-cols-[1fr_auto_1fr] items-center">
+        <nav className="max-w-6xl mx-auto px-6 flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr]">
           {/* Wordmark */}
           <a
             href="/"
