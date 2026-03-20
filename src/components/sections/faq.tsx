@@ -49,11 +49,6 @@ const faqs = [
     answer:
       "Yes. Subscriptions are managed through your Apple ID, and you can cancel anytime from your device's subscription settings.",
   },
-  {
-    question: "Is there a wine database behind Corki?",
-    answer:
-      "Corki answers wine questions conversationally, not from a lookup database. This means it handles questions databases can't: 'Is this wine worth it for the occasion?' / 'What does my partner usually enjoy?'",
-  },
 ];
 
 export function FAQ() {
