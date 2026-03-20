@@ -30,14 +30,14 @@ const faqs = [
       "Point your camera at any wine label. Corki uses AI vision to identify the wine and generate a full response — tasting notes, region info, pairing suggestions — in seconds.",
   },
   {
-    question: "What's the difference between free and Corki Pro?",
+    question: "What's the difference between free and Corki Friend?",
     answer:
-      "The free tier gives you 10 messages all-time to try the product. Corki Pro unlocks unlimited conversations, label scans, full chat history, cellar management, and all seven premium themes.",
+      "The free tier gives you 10 messages all-time to try the product. Corki Friend unlocks unlimited conversations, label scans, full chat history, cellar management, and all seven premium themes.",
   },
   {
-    question: "Is this just ChatGPT with a wine skin?",
+    question: "How does Corki understand my taste and cellar?",
     answer:
-      "Corki is built on top of OpenAI's models, but it's not just a wrapper. The difference is context. Corki remembers your previous conversations, knows what's in your cellar, and learns your taste over time. ChatGPT doesn't remember your last 50 wines. Corki does.",
+      "Corki has deep knowledge of grapes, regions, vintages, producers, and food pairing — and it ties that expertise to your specific collection. It remembers your previous conversations, knows what's in your cellar, and learns your preferences over time. Ask what to open tonight, whether a wine is ready to drink, or what your partner usually enjoys — it gives you answers tailored to you, not generic results.",
   },
   {
     question: "What phones does it work on?",
@@ -48,11 +48,6 @@ const faqs = [
     question: "Can I cancel my subscription anytime?",
     answer:
       "Yes. Subscriptions are managed through your Apple ID, and you can cancel anytime from your device's subscription settings.",
-  },
-  {
-    question: "Is there a wine database behind Corki?",
-    answer:
-      "Corki uses AI to answer wine questions — it's conversational, not a lookup database. This means it handles questions databases can't: 'Is this wine worth it for the occasion?' / 'What does my partner usually enjoy?'",
   },
 ];
 
