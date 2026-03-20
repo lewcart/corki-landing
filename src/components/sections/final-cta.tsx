@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import { useState } from "react";
 import { Orb } from "@/components/ui/orb";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -14,7 +15,44 @@ const fadeUp: Variants = {
   }),
 };
 
+type FormState = "idle" | "loading" | "success" | "error";
+
 export function FinalCTA() {
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState<FormState>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (state === "loading" || state === "success") return;
+    setState("loading");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          source: "landing_page",
+          referrer: document.referrer || undefined,
+        }),
+      });
+
+      if (res.ok) {
+        setState("success");
+        setEmail("");
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setErrorMsg(data.error ?? "Something went wrong. Please try again.");
+        setState("error");
+      }
+    } catch {
+      setErrorMsg("Network error. Please check your connection.");
+      setState("error");
+    }
+  }
+
   return (
     <section
       id="waitlist"
@@ -72,29 +110,85 @@ export function FinalCTA() {
           Join the waitlist and be first when it&apos;s ready.
         </motion.p>
 
-        {/* Primary CTA */}
+        {/* Email capture form */}
         <motion.div
           custom={0.25}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeUp}
-          className="flex flex-col items-center gap-5"
+          className="w-full max-w-sm flex flex-col items-center gap-4"
         >
-          <a
-            href="#waitlist"
-            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-[family-name:var(--font-body)] font-semibold text-base text-[#120D0A] transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
-            style={{
-              background: "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)",
-              boxShadow:
-                "0 4px 24px rgba(194,123,46,0.4), 0 1px 0 rgba(255,255,255,0.12) inset",
-            }}
-          >
-            Join the Waitlist
-          </a>
+          {state === "success" ? (
+            <div
+              className="w-full flex flex-col items-center gap-2 px-6 py-5 rounded-xl text-center"
+              style={{
+                background: "rgba(123,51,70,0.15)",
+                border: "1px solid rgba(123,51,70,0.3)",
+              }}
+            >
+              <span className="text-amber-light font-[family-name:var(--font-heading)] text-xl">
+                You&apos;re on the list!
+              </span>
+              <span className="text-smoke font-[family-name:var(--font-body)] text-sm">
+                We&apos;ll let you know the moment Corki is ready.
+              </span>
+            </div>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="w-full flex flex-col sm:flex-row gap-2"
+            >
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                required
+                disabled={state === "loading"}
+                className="flex-1 px-4 py-3.5 rounded-xl font-[family-name:var(--font-body)] text-sm text-cream placeholder:text-warm-gray focus:outline-none focus:ring-2 focus:ring-amber disabled:opacity-60"
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(163,155,149,0.2)",
+                }}
+              />
+              <button
+                type="submit"
+                disabled={state === "loading"}
+                className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-[family-name:var(--font-body)] font-semibold text-sm text-[#120D0A] transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                style={{
+                  background: "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)",
+                  boxShadow: "0 4px 24px rgba(194,123,46,0.4), 0 1px 0 rgba(255,255,255,0.12) inset",
+                }}
+              >
+                {state === "loading" ? (
+                  <>
+                    <svg
+                      className="animate-spin h-4 w-4"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                    </svg>
+                    Joining…
+                  </>
+                ) : (
+                  "Join the Waitlist"
+                )}
+              </button>
+            </form>
+          )}
+
+          {state === "error" && (
+            <p className="text-sm font-[family-name:var(--font-body)]" style={{ color: "#e57373" }}>
+              {errorMsg}
+            </p>
+          )}
 
           {/* App Store coming soon badge */}
-          <div className="flex flex-col items-center gap-1.5">
+          <div className="flex flex-col items-center gap-1.5 mt-1">
             <p className="text-warm-gray font-[family-name:var(--font-body)] text-xs uppercase tracking-widest">
               Coming soon to
             </p>
