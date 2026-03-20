@@ -19,7 +19,7 @@ const items = [
         <span aria-hidden="true">📱</span>
         <span className="ml-2 text-smoke font-medium">iOS</span>
         <span className="ml-1.5 text-warm-gray">·</span>
-        <span className="ml-1.5 text-smoke">Available now</span>
+        <span className="ml-1.5 text-smoke">Coming soon</span>
       </>
     ),
   },
