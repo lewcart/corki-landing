@@ -6,13 +6,13 @@ const footerColumns = [
   {
     heading: null,
     brand: true,
-    tagline: "Your pocket sommelier. Ask anything about wine.",
+    tagline: "Your wine friend. Ask anything about wine.",
   },
   {
     heading: "Features",
     links: [
       { label: "Scan", href: "#scan" },
-      { label: "AI Chat", href: "#ask" },
+      { label: "Chat", href: "#ask" },
       { label: "Cellar", href: "#cellar" },
       { label: "Pricing", href: "#pricing" },
     ],

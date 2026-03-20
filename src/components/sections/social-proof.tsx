@@ -28,9 +28,9 @@ const items = [
     content: (
       <>
         <span className="text-smoke italic">
-          &ldquo;It&rsquo;s like texting a sommelier&rdquo;
+          &ldquo;It&rsquo;s like texting a wine friend&rdquo;
         </span>
-        <span className="ml-2 text-warm-gray text-sm">— Early user</span>
+        <span className="ml-2 text-warm-gray text-sm">Early user</span>
       </>
     ),
   },

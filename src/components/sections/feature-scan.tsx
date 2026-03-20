@@ -104,7 +104,7 @@ function ScanResultMockup() {
               className="font-body"
               style={{ fontSize: "10px", color: "#A39B95" }}
             >
-              Corki score
+              Corki&apos;s take
             </p>
           </div>
           <div
@@ -237,7 +237,7 @@ export function FeatureScan() {
             >
               <p style={{ color: "#6B6460" }}>
                 Standing in the bottle shop, staring at a label you don&rsquo;t recognise?
-                Scan it. Corki tells you exactly what you&rsquo;re holding — the grape, the region,
+                Scan it. Corki tells you exactly what you&rsquo;re holding: the grape, the region,
                 what it pairs with, whether it&rsquo;s worth the price.
               </p>
               <p style={{ color: "#6B6460" }}>

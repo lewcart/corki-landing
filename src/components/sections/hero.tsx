@@ -116,7 +116,7 @@ export function Hero() {
             icon={<span aria-hidden="true">✦</span>}
             variant="default"
           >
-            AI Wine Assistant
+            Your Wine Friend
           </FeatureBadge>
         </motion.div>
 
@@ -128,9 +128,9 @@ export function Hero() {
           variants={fadeUp}
           className="mb-6 font-[family-name:var(--font-heading)]"
         >
-          Your pocket
+          Your wine
           <br />
-          sommelier.
+          friend.
         </motion.h1>
 
         {/* Subheading */}
@@ -143,7 +143,7 @@ export function Hero() {
         >
           Ask anything about wine. Scan any label.
           <br />
-          Get a real answer&nbsp;— not a score.
+          Get a real answer.
         </motion.p>
 
         {/* CTA row */}

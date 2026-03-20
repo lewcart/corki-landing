@@ -19,7 +19,7 @@ const fadeUp: Variants = {
 const freeFeatures: PricingFeature[] = [
   { text: "10 messages to try", included: true },
   { text: "Label scanning", included: true },
-  { text: "AI wine chat", included: true },
+  { text: "Wine chat", included: true },
   { text: "Chat history", included: false },
   { text: "Cellar management", included: false },
   { text: "Unlimited scans", included: false },
@@ -29,7 +29,7 @@ const proFeatures: PricingFeature[] = [
   { text: "Unlimited messages & scans", included: true },
   { text: "Full chat history", included: true },
   { text: "Cellar management", included: true },
-  { text: "My Palate — Corki learns your taste", included: true },
+  { text: "My Palate: Corki learns your taste", included: true },
   { text: "All 7 premium themes", included: true },
 ];
 
@@ -61,7 +61,7 @@ export function Pricing() {
           variants={fadeUp}
           className="mb-6"
         >
-          <FeatureBadge variant="pro">Corki Pro</FeatureBadge>
+          <FeatureBadge variant="pro">Corki Friend</FeatureBadge>
         </motion.div>
 
         {/* Heading */}
@@ -75,7 +75,7 @@ export function Pricing() {
         >
           The price of a glass.
           <br />
-          The knowledge of a sommelier.
+          The knowledge of a wine friend.
         </motion.h2>
 
         {/* Subhead */}
@@ -87,7 +87,7 @@ export function Pricing() {
           variants={fadeUp}
           className="text-center text-smoke font-[family-name:var(--font-body)] text-base md:text-lg max-w-lg mb-10"
         >
-          Try Corki free — no account needed, no time limit.
+          Try Corki free. No account needed, no time limit.
           10 messages to see if it&apos;s for you.
         </motion.p>
 
@@ -168,7 +168,7 @@ export function Pricing() {
 
           {/* Pro card */}
           <PricingCard
-            name="Corki Pro"
+            name="Corki Friend"
             price={isAnnual ? "$49.99" : "$5.99"}
             period={isAnnual ? "/ year" : "/ month"}
             features={proFeatures}
@@ -215,7 +215,7 @@ export function Pricing() {
           style={{ color: "#6B6460" }}
         >
           No subscription required to start. The 10 free messages are your
-          trial — not a countdown, not a time limit. Take your time.
+          trial. Not a countdown, not a time limit. Take your time.
         </motion.p>
       </div>
     </section>

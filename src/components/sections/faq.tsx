@@ -27,7 +27,7 @@ const faqs = [
   {
     question: "How does the label scanner work?",
     answer:
-      "Point your camera at any wine label. Corki uses AI vision to identify the wine and generate a full response — tasting notes, region info, pairing suggestions — in seconds.",
+      "Point your camera at any wine label. Corki identifies the wine and generates a full response: tasting notes, region info, pairing suggestions, in seconds.",
   },
   {
     question: "What's the difference between free and Corki Friend?",
@@ -42,12 +42,17 @@ const faqs = [
   {
     question: "What phones does it work on?",
     answer:
-      "iOS — iPhone and iPad. Android and web versions are in development.",
+      "iOS: iPhone and iPad. Android and web versions are in development.",
   },
   {
     question: "Can I cancel my subscription anytime?",
     answer:
       "Yes. Subscriptions are managed through your Apple ID, and you can cancel anytime from your device's subscription settings.",
+  },
+  {
+    question: "Is there a wine database behind Corki?",
+    answer:
+      "Corki answers wine questions conversationally, not from a lookup database. This means it handles questions databases can't: 'Is this wine worth it for the occasion?' / 'What does my partner usually enjoy?'",
   },
 ];
 

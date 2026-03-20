@@ -51,7 +51,7 @@ export function Testimonial() {
             }}
           >
             &ldquo;It&apos;s like having a friend who knows
-            everything about wine — and never
+            everything about wine, and never
             makes you feel like you should already know.&rdquo;
           </p>
 
@@ -66,7 +66,7 @@ export function Testimonial() {
               className="not-italic font-[family-name:var(--font-body)] text-sm font-medium tracking-widest uppercase"
               style={{ color: "#A39B95", letterSpacing: "0.12em" }}
             >
-              — Early Corki user
+              Early Corki user
             </cite>
           </motion.footer>
         </motion.blockquote>

@@ -8,11 +8,11 @@ import { ChatDemo } from "@/components/ui/chat-demo";
 const messages = [
   {
     role: "user" as const,
-    text: "I'm making lamb tonight — what should I open?",
+    text: "I'm making lamb tonight. What should I open?",
   },
   {
     role: "corki" as const,
-    text: "For lamb, I'd go with something with structure — a Côtes du Rhône or an Australian Grenache. Do you have either in your cellar, or shall I suggest something to pick up?",
+    text: "For lamb, I'd go with something with structure: a Côtes du Rhône or an Australian Grenache. Do you have either in your cellar, or shall I suggest something to pick up?",
   },
   {
     role: "user" as const,
@@ -20,7 +20,7 @@ const messages = [
   },
   {
     role: "corki" as const,
-    text: "That's perfect. McLaren Vale Grenache at 3 years is right in its window — decant it for 30 minutes and you're set. Enjoy dinner.",
+    text: "That's perfect. McLaren Vale Grenache at 3 years is right in its window. Decant it for 30 minutes and you're set. Enjoy dinner.",
   },
 ];
 
@@ -103,7 +103,7 @@ export function FeatureAsk() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              <FeatureBadge>AI Chat</FeatureBadge>
+              <FeatureBadge>Chat</FeatureBadge>
             </motion.div>
 
             <motion.h2

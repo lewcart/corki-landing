@@ -236,12 +236,13 @@ export function FeatureCellar() {
               className="flex flex-col gap-3"
             >
               <p>
-                Every bottle you&rsquo;ve scanned, logged, and loved — in one place.
+                Every bottle you&rsquo;ve scanned, logged, and loved. All in one place.
                 Track what you have, know what to drink next, and never forget
                 a wine you&rsquo;d buy again.
               </p>
               <p>
-                Corki remembers what you&rsquo;ve tasted. So you don&rsquo;t have to.
+                Add a cellar, a location, or a wine in seconds. Other apps make
+                organisation feel like homework. Corki makes it effortless.
               </p>
             </motion.div>
 
