@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -57,13 +58,13 @@ export function Nav() {
       >
         <nav className="max-w-6xl mx-auto px-6 flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr]">
           {/* Wordmark */}
-          <a
+          <Link
             href="/"
             className="font-heading text-2xl font-medium text-cream tracking-tight hover:opacity-80 transition-opacity"
             style={{ color: "#F9F6F4" }}
           >
             Corki
-          </a>
+          </Link>
 
           {/* Desktop nav — always centred */}
           <ul className="hidden md:flex items-center gap-8">

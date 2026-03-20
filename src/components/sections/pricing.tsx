@@ -112,7 +112,7 @@ export function Pricing() {
             role="switch"
             aria-checked={isAnnual}
             onClick={() => setIsAnnual((v) => !v)}
-            className="relative w-12 h-6 rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+            className="relative w-12 h-6 rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber overflow-hidden"
             style={{
               background: isAnnual
                 ? "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)"
@@ -122,7 +122,8 @@ export function Pricing() {
           >
             <motion.span
               className="absolute top-px w-5 h-5 rounded-full bg-cream shadow-sm"
-              animate={{ x: isAnnual ? 25 : 2 }}
+              initial={false}
+              animate={{ x: isAnnual ? 24 : 2 }}
               transition={{ type: "spring", stiffness: 500, damping: 35 }}
             />
           </button>
