@@ -18,7 +18,7 @@ const fadeUp = {
   }),
 };
 
-const faqs = [
+const faqs: { question: string; answer: React.ReactNode }[] = [
   {
     question: "Do I need to create an account?",
     answer:
@@ -37,12 +37,19 @@ const faqs = [
   {
     question: "How does Corki understand my taste and cellar?",
     answer:
-      "Corki has deep knowledge of grapes, regions, vintages, producers, and food pairing — and it ties that expertise to your specific collection. It remembers your previous conversations, knows what's in your cellar, and learns your preferences over time. Ask what to open tonight, whether a wine is ready to drink, or what your partner usually enjoys — it gives you answers tailored to you, not generic results.",
+      "Corki has deep knowledge of grapes, regions, vintages, producers, and food pairing, and ties that expertise to your specific collection. They remember your previous conversations, know what's in your cellar, and learn your preferences over time. Ask what to open tonight, whether a wine is ready to drink, or what to bring to a dinner party. Answers tailored to you, not generic results.",
   },
   {
     question: "What phones does it work on?",
-    answer:
-      "iOS: iPhone and iPad. Android and web versions are in development.",
+    answer: (
+      <>
+        iOS: iPhone and iPad. Android and web versions are in development.{" "}
+        <a href="#waitlist" className="underline hover:text-amber-light transition-colors duration-200">
+          Join the waitlist
+        </a>{" "}
+        to find out when they&apos;re available.
+      </>
+    ),
   },
   {
     question: "Can I cancel my subscription anytime?",

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { ShoppingBag, Utensils, Home } from "lucide-react";
+import { ShoppingBag, Wine, Compass } from "lucide-react";
 import { FeatureBadge } from "@/components/ui/feature-badge";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -19,20 +19,20 @@ const cards = [
   {
     icon: ShoppingBag,
     title: "At the bottle shop",
-    quote: "Standing in front of 200 wines, no idea what to choose.",
-    action: "Scan the label. Ask Corki. Walk out confident.",
+    quote: "I'm choosing between three bottles and I don't know which one I'll actually like.",
+    action: "Snap the labels. Corki tells you which one's for you.",
   },
   {
-    icon: Utensils,
-    title: "At a restaurant",
-    quote: "The wine list has 40 options and I don't recognise any of them.",
-    action: "Ask Corki what to order with your food. No awkwardness.",
+    icon: Wine,
+    title: "Deciding what to open",
+    quote: "I'm cooking steak tonight. What should I open that'll pair well?",
+    action: "Corki knows your cellar and picks the right bottle for the meal.",
   },
   {
-    icon: Home,
-    title: "At home",
-    quote: "I have six bottles in the cupboard. What should I open tonight?",
-    action: "Tell Corki what you're cooking. Get a straight answer.",
+    icon: Compass,
+    title: "Exploring something new",
+    quote: "I always drink the same thing. What else would I like?",
+    action: "Corki maps your taste to new grapes, regions, and styles worth trying.",
   },
 ];
 
@@ -53,7 +53,7 @@ export function UseCases() {
           variants={fadeUp}
           className="mb-6"
         >
-          <FeatureBadge>Made for wine drinkers, not wine experts</FeatureBadge>
+          <FeatureBadge variant="pro">Wine advice that starts with you</FeatureBadge>
         </motion.div>
 
         {/* Heading */}
@@ -93,18 +93,26 @@ export function UseCases() {
                   boxShadow: "0 4px 24px rgba(123,51,70,0.12)",
                 }}
               >
+                {/* Accent bar */}
+                <div
+                  className="h-1 rounded-full mb-6"
+                  style={{
+                    background: "linear-gradient(90deg, var(--amber), var(--amber-light))",
+                  }}
+                />
+
                 {/* Icon area */}
                 <div className="mb-6">
                   <div
                     className="inline-flex items-center justify-center w-12 h-12 rounded-xl"
                     style={{
-                      background: "rgba(123,51,70,0.08)",
+                      background: "rgba(194,123,46,0.10)",
                     }}
                   >
                     <Icon
                       size={20}
                       strokeWidth={1.75}
-                      style={{ color: "var(--burgundy)" }}
+                      style={{ color: "var(--amber)" }}
                     />
                   </div>
                 </div>

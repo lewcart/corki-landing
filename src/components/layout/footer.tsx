@@ -11,9 +11,10 @@ const footerColumns = [
   {
     heading: "Features",
     links: [
-      { label: "Scan", href: "#scan" },
-      { label: "Chat", href: "#ask" },
-      { label: "Cellar", href: "#cellar" },
+      { label: "Scan", href: "#feature-scan" },
+      { label: "Chat", href: "#feature-ask" },
+      { label: "Cellar", href: "#feature-cellar" },
+      { label: "Palate", href: "#feature-palate" },
       { label: "Pricing", href: "#pricing" },
     ],
   },
@@ -28,7 +29,6 @@ const footerColumns = [
   {
     heading: "Contact",
     links: [
-      { label: "@getcorki", href: "https://twitter.com/getcorki", external: true },
       { label: "Instagram", href: "https://instagram.com/getcorki", external: true },
     ],
   },

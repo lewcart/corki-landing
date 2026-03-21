@@ -238,7 +238,7 @@ export function FeatureScan() {
               <p style={{ color: "#6B6460" }}>
                 Standing in the bottle shop, staring at a label you don&rsquo;t recognise?
                 Scan it. Corki tells you exactly what you&rsquo;re holding: the grape, the region,
-                what it pairs with, whether it&rsquo;s worth the price.
+                what it pairs with, and whether you&rsquo;ll like it.
               </p>
               <p style={{ color: "#6B6460" }}>
                 In plain English. Not wine-critic jargon.

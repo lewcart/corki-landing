@@ -75,7 +75,7 @@ export function Pricing() {
         >
           The price of a glass.
           <br />
-          The knowledge of a wine friend.
+          The knowledge of a sommelier.
         </motion.h2>
 
         {/* Subhead */}
@@ -121,7 +121,7 @@ export function Pricing() {
             }}
           >
             <motion.span
-              className="absolute top-px w-5 h-5 rounded-full bg-cream shadow-sm"
+              className="absolute top-px left-0 w-5 h-5 rounded-full bg-cream shadow-sm"
               initial={false}
               animate={{ x: isAnnual ? 24 : 2 }}
               transition={{ type: "spring", stiffness: 500, damping: 35 }}
@@ -133,18 +133,16 @@ export function Pricing() {
             style={{ color: isAnnual ? "#F9F6F4" : "#6B6460" }}
           >
             Annual
-            {isAnnual && (
-              <span
-                className="ml-2 px-1.5 py-0.5 rounded text-xs font-semibold"
-                style={{
-                  background: "rgba(194,123,46,0.2)",
-                  color: "#D4944A",
-                  border: "1px solid rgba(194,123,46,0.25)",
-                }}
-              >
-                save 30%
-              </span>
-            )}
+            <span
+              className="ml-2 px-1.5 py-0.5 rounded text-xs font-semibold"
+              style={{
+                background: "rgba(194,123,46,0.2)",
+                color: "#D4944A",
+                border: "1px solid rgba(194,123,46,0.25)",
+              }}
+            >
+              save 30%
+            </span>
           </span>
         </motion.div>
 
@@ -170,8 +168,9 @@ export function Pricing() {
           {/* Pro card */}
           <PricingCard
             name="Corki Friend"
-            price={isAnnual ? "$49.99" : "$5.99"}
-            period={isAnnual ? "/ year" : "/ month"}
+            price={isAnnual ? "$4.17" : "$5.99"}
+            period="/ month"
+            billingNote={isAnnual ? "Billed yearly at $49.99" : undefined}
             features={proFeatures}
             highlighted={true}
             ctaText="Join the Waitlist"
@@ -202,7 +201,7 @@ export function Pricing() {
           className="mt-2 text-center text-xs font-[family-name:var(--font-body)]"
           style={{ color: "#9C4B61" }}
         >
-          Launching soon · Prices lock in for waitlist members
+          Launching soon
         </motion.p>
 
         {/* Footer note */}

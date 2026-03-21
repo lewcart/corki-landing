@@ -3,7 +3,6 @@
 import { motion, type Variants } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Orb } from "@/components/ui/orb";
-import { FeatureBadge } from "@/components/ui/feature-badge";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -85,7 +84,7 @@ export function Hero() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="mb-3"
+          className="mb-6"
         >
           <span
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full font-[family-name:var(--font-body)] text-xs font-semibold uppercase"
@@ -102,22 +101,6 @@ export function Hero() {
             />
             Coming Soon
           </span>
-        </motion.div>
-
-        {/* Badge */}
-        <motion.div
-          custom={0.1}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="mb-6"
-        >
-          <FeatureBadge
-            icon={<span aria-hidden="true">✦</span>}
-            variant="default"
-          >
-            Your Wine Friend
-          </FeatureBadge>
         </motion.div>
 
         {/* H1 */}

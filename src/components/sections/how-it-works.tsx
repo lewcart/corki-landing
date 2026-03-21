@@ -36,7 +36,7 @@ const steps = [
     icon: Archive,
     title: "Build your cellar",
     description:
-      "Every wine you scan or love gets saved. Corki learns your taste over time.",
+      "Track what\u2019s in your cellar. Add bottles as you buy them, and Corki gets to know your taste.",
   },
 ];
 
@@ -89,7 +89,7 @@ export function HowItWorks() {
         <div className="relative w-full">
           {/* Connecting line — desktop only */}
           <motion.div
-            className="hidden md:block absolute top-[3.25rem] left-[calc(16.666%+2rem)] right-[calc(16.666%+2rem)] h-px"
+            className="hidden md:block absolute top-[5.5rem] left-[calc(16.666%+2rem)] right-[calc(16.666%+2rem)] h-px"
             style={{
               background:
                 "linear-gradient(90deg, rgba(123,51,70,0.4) 0%, rgba(123,51,70,0.15) 50%, rgba(123,51,70,0.4) 100%)",
@@ -113,18 +113,14 @@ export function HowItWorks() {
                   variants={fadeUp}
                   className="flex-1 flex flex-col items-center text-center"
                 >
-                  {/* Number + icon stack */}
-                  <div className="relative mb-6 flex items-center justify-center w-[6.5rem] h-[6.5rem]">
-                    {/* Large semi-transparent step number */}
+                  {/* Number above icon */}
+                  <div className="flex flex-col items-center mb-6">
                     <span
-                      className="absolute z-20 font-[family-name:var(--font-heading)] select-none leading-none"
+                      className="font-[family-name:var(--font-heading)] select-none leading-none mb-3"
                       style={{
-                        fontSize: "5.5rem",
+                        fontSize: "3rem",
                         fontWeight: 500,
-                        color: "rgba(123,51,70,0.18)",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
+                        color: "rgba(123,51,70,0.3)",
                       }}
                       aria-hidden="true"
                     >
@@ -133,7 +129,7 @@ export function HowItWorks() {
 
                     {/* Icon circle */}
                     <div
-                      className="relative z-10 flex items-center justify-center w-14 h-14 rounded-full"
+                      className="flex items-center justify-center w-14 h-14 rounded-full"
                       style={{
                         background:
                           "radial-gradient(circle at 40% 35%, rgba(194,123,46,0.15) 0%, rgba(123,51,70,0.25) 60%, rgba(18,13,10,0) 100%)",

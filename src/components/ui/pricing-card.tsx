@@ -10,6 +10,7 @@ interface PricingCardProps {
   name: string;
   price: string;
   period?: string;
+  billingNote?: string;
   features: PricingFeature[];
   highlighted?: boolean;
   ctaText: string;
@@ -21,6 +22,7 @@ export function PricingCard({
   name,
   price,
   period,
+  billingNote,
   features,
   highlighted = false,
   ctaText,
@@ -58,7 +60,7 @@ export function PricingCard({
             boxShadow: "0 4px 14px rgba(194,123,46,0.4)",
           }}
         >
-          Most Popular
+          Best Value
         </div>
       )}
 
@@ -79,6 +81,11 @@ export function PricingCard({
           <span className="text-smoke text-sm mb-1.5 font-body">{period}</span>
         )}
       </div>
+      {billingNote && (
+        <p className="text-xs font-body" style={{ color: "#6B6460" }}>
+          {billingNote}
+        </p>
+      )}
 
       <div
         className="h-px my-5"
