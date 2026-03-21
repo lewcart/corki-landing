@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type OrbSize = "sm" | "md" | "lg" | "hero";
@@ -71,9 +72,24 @@ export function Orb({ size = "md", className }: OrbProps) {
         }}
       />
 
-      {/* Main orb body */}
+      {/* Hover wrapper — separated so on/off transition is buttery smooth */}
       <motion.div
         className={cn("relative rounded-full cursor-pointer", sizes.orb)}
+        whileHover={{
+          scale: 1.06,
+          boxShadow:
+            "0 0 70px rgba(123,51,70,0.65), 0 0 130px rgba(123,51,70,0.25), inset 0 1px 0 rgba(255,255,255,0.1)",
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 180,
+          damping: 18,
+          mass: 0.8,
+        }}
+      >
+      {/* Main orb body — pulse animation */}
+      <motion.div
+        className="relative w-full h-full rounded-full"
         style={{
           background:
             "radial-gradient(circle at 40% 35%, rgba(194,123,46,0.35) 0%, #7B3346 25%, #5C1F33 55%, #3A1020 80%, #1E0A14 100%)",
@@ -92,12 +108,6 @@ export function Orb({ size = "md", className }: OrbProps) {
           duration: 3,
           ease: "easeInOut",
           repeat: Infinity,
-        }}
-        whileHover={{
-          scale: 1.06,
-          boxShadow:
-            "0 0 70px rgba(123,51,70,0.65), 0 0 130px rgba(123,51,70,0.25), inset 0 1px 0 rgba(255,255,255,0.1)",
-          transition: { duration: 0.4, ease: "easeOut" },
         }}
       >
         {/* Inner amber/gold glow centre */}
@@ -122,6 +132,54 @@ export function Orb({ size = "md", className }: OrbProps) {
           }}
         />
 
+        {/* Corki logo overlay */}
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-full">
+          {/* Soft float (4s, out of phase with 3s orb pulse) */}
+          <motion.div
+            animate={{ y: [-2, 2, -2] }}
+            transition={{
+              duration: 4,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
+            className="relative"
+          >
+            {/* Glow bloom */}
+            <motion.div
+              animate={{
+                filter: [
+                  "drop-shadow(0 0 4px rgba(255,255,255,0.15)) drop-shadow(0 0 10px rgba(255,255,255,0.05))",
+                  "drop-shadow(0 0 9px rgba(255,255,255,0.35)) drop-shadow(0 0 20px rgba(255,255,255,0.12))",
+                  "drop-shadow(0 0 4px rgba(255,255,255,0.15)) drop-shadow(0 0 10px rgba(255,255,255,0.05))",
+                ],
+              }}
+              transition={{
+                duration: 3,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+              className="relative"
+            >
+              <Image
+                src="/icon/CorkiLogo.svg"
+                alt=""
+                width={320}
+                height={320}
+                style={{ filter: "brightness(0) invert(1)" }}
+                className={cn(
+                  "select-none pointer-events-none",
+                  size === "sm" && "w-16 h-16",
+                  size === "md" && "w-[128px] h-[128px]",
+                  size === "lg" && "w-[224px] h-[224px]",
+                  size === "hero" && "w-[224px] h-[224px] md:w-[320px] md:h-[320px]",
+                )}
+                draggable={false}
+                priority
+              />
+            </motion.div>
+          </motion.div>
+        </div>
+
         {/* Surface sheen */}
         <div
           className="absolute inset-0 rounded-full"
@@ -130,6 +188,7 @@ export function Orb({ size = "md", className }: OrbProps) {
               "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.07) 0%, transparent 55%)",
           }}
         />
+      </motion.div>
       </motion.div>
     </div>
   );

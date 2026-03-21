@@ -111,7 +111,7 @@ export function Hero() {
           variants={fadeUp}
           className="mb-6 font-[family-name:var(--font-heading)]"
         >
-          Your wine
+          Wine&apos;s best
           <br />
           friend.
         </motion.h1>

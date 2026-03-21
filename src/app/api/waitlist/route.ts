@@ -57,7 +57,8 @@ export async function POST(req: NextRequest) {
 // GET /api/waitlist — admin export (protected)
 export async function GET(req: NextRequest) {
   const secret = process.env.ADMIN_SECRET;
-  if (!secret || req.headers.get("x-admin-key") !== secret) {
+  const providedKey = req.headers.get("x-admin-key") || req.nextUrl.searchParams.get("key");
+  if (!secret || providedKey !== secret) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
