@@ -128,7 +128,7 @@ export function FeatureAsk() {
               className="flex flex-col gap-3"
             >
               <p style={{ color: "#6B6460" }}>
-                Not a score. Not a database entry. A conversation.
+                Not a score. Not a search result. A conversation.
               </p>
               <p style={{ color: "#6B6460" }}>
                 Ask Corki what to bring to a dinner party. Ask why that Barossa Shiraz tastes

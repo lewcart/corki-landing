@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const footerColumns = [
@@ -74,22 +75,37 @@ function FooterColumn({ col }: { col: FooterColumn }) {
         <ul className="flex flex-col gap-2.5">
           {col.links.map((link) => (
             <li key={link.label}>
-              <a
-                href={link.href}
-                className="text-sm font-body transition-colors duration-200"
-                style={{ color: "#A39B95" }}
-                {...(link.external
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "#F9F6F4";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "#A39B95";
-                }}
-              >
-                {link.label}
-              </a>
+              {link.external ? (
+                <a
+                  href={link.href}
+                  className="text-sm font-body transition-colors duration-200"
+                  style={{ color: "#A39B95" }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.color = "#F9F6F4";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.color = "#A39B95";
+                  }}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  href={link.href}
+                  className="text-sm font-body transition-colors duration-200"
+                  style={{ color: "#A39B95" }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.color = "#F9F6F4";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.color = "#A39B95";
+                  }}
+                >
+                  {link.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
