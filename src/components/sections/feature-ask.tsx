@@ -297,9 +297,9 @@ function AskConversationMockup() {
         <div className="flex items-center gap-2 rounded-full px-3 py-2" style={{ background: LM.card, border: `1px solid ${LM.border}` }}>
           <input
             type="text"
-            readOnly
             value={phase === "typing" ? PRESET_MESSAGE.slice(0, typedLen) : ""}
             placeholder="Ask Corki anything..."
+            onChange={() => {}}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             disabled={showUserMsg}

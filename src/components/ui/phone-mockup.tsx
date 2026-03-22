@@ -85,7 +85,7 @@ export function PhoneMockup({ children, className }: PhoneMockupProps) {
           />
 
           {/* Screen content */}
-          <div className="absolute inset-0 overflow-hidden">{children}</div>
+          <div className="absolute inset-0 overflow-hidden phone-screen">{children}</div>
         </div>
 
         {/* Frame edge highlights */}

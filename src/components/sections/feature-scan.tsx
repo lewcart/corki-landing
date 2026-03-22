@@ -296,9 +296,9 @@ function ScanConversationMockup() {
           <input
             ref={inputRef}
             type="text"
-            readOnly
             value={phase === "typing" ? PRESET_MESSAGE.slice(0, typedLen) : ""}
-            placeholder={showUserMsg ? "Ask Corki anything..." : "Ask Corki anything..."}
+            placeholder="Ask Corki anything..."
+            onChange={() => {}}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             disabled={showUserMsg}
