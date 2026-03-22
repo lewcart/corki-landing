@@ -12,13 +12,15 @@ function getDb() {
 
 const CREATE_TABLE_SQL = `
   CREATE TABLE IF NOT EXISTS waitlist_signups (
-    id            SERIAL PRIMARY KEY,
-    email         TEXT NOT NULL UNIQUE,
-    source        TEXT,
-    referrer      TEXT,
-    confirmed     BOOLEAN NOT NULL DEFAULT FALSE,
-    confirm_token TEXT,
-    signed_up     TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    id                SERIAL PRIMARY KEY,
+    email             TEXT NOT NULL UNIQUE,
+    source            TEXT,
+    referrer          TEXT,
+    confirmed         BOOLEAN NOT NULL DEFAULT FALSE,
+    confirm_token     TEXT,
+    privacy_accepted  BOOLEAN NOT NULL DEFAULT FALSE,
+    marketing_consent BOOLEAN NOT NULL DEFAULT FALSE,
+    signed_up         TIMESTAMPTZ NOT NULL DEFAULT NOW()
   )
 `;
 
@@ -31,6 +33,18 @@ const MIGRATE_SQL = `
     ) THEN
       ALTER TABLE waitlist_signups ADD COLUMN confirmed BOOLEAN NOT NULL DEFAULT FALSE;
       ALTER TABLE waitlist_signups ADD COLUMN confirm_token TEXT;
+    END IF;
+    IF NOT EXISTS (
+      SELECT 1 FROM information_schema.columns
+      WHERE table_name = 'waitlist_signups' AND column_name = 'privacy_accepted'
+    ) THEN
+      ALTER TABLE waitlist_signups ADD COLUMN privacy_accepted BOOLEAN NOT NULL DEFAULT FALSE;
+    END IF;
+    IF NOT EXISTS (
+      SELECT 1 FROM information_schema.columns
+      WHERE table_name = 'waitlist_signups' AND column_name = 'marketing_consent'
+    ) THEN
+      ALTER TABLE waitlist_signups ADD COLUMN marketing_consent BOOLEAN NOT NULL DEFAULT FALSE;
     END IF;
   END $$;
 `;
@@ -50,12 +64,16 @@ export async function POST(req: NextRequest) {
   let email: string;
   let source: string | undefined;
   let referrer: string | undefined;
+  let privacyAccepted: boolean;
+  let marketingConsent: boolean;
 
   try {
     const body = await req.json();
     email = (body.email ?? "").trim().toLowerCase();
     source = body.source;
     referrer = body.referrer;
+    privacyAccepted = body.privacyAccepted === true;
+    marketingConsent = body.marketingConsent === true;
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
@@ -63,6 +81,11 @@ export async function POST(req: NextRequest) {
   // Basic email validation
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
     return NextResponse.json({ error: "Please enter a valid email address" }, { status: 422 });
+  }
+
+  // Privacy policy acceptance is required
+  if (!privacyAccepted) {
+    return NextResponse.json({ error: "You must accept the Privacy Policy to join the waitlist." }, { status: 422 });
   }
 
   try {
@@ -86,14 +109,16 @@ export async function POST(req: NextRequest) {
       // Exists but unconfirmed — update token and resend
       await sql`
         UPDATE waitlist_signups
-        SET confirm_token = ${token}
+        SET confirm_token = ${token},
+            privacy_accepted = ${privacyAccepted},
+            marketing_consent = ${marketingConsent}
         WHERE email = ${email}
       `;
     } else {
       // New signup
       await sql`
-        INSERT INTO waitlist_signups (email, source, referrer, confirm_token)
-        VALUES (${email}, ${source ?? null}, ${referrer ?? null}, ${token})
+        INSERT INTO waitlist_signups (email, source, referrer, confirm_token, privacy_accepted, marketing_consent)
+        VALUES (${email}, ${source ?? null}, ${referrer ?? null}, ${token}, ${privacyAccepted}, ${marketingConsent})
       `;
     }
 
@@ -128,7 +153,7 @@ export async function GET(req: NextRequest) {
     await sql.query(CREATE_TABLE_SQL);
 
     const rows = await sql`
-      SELECT id, email, source, referrer, confirmed, signed_up
+      SELECT id, email, source, referrer, confirmed, privacy_accepted, marketing_consent, signed_up
       FROM waitlist_signups
       ORDER BY signed_up DESC
     `;
@@ -136,10 +161,10 @@ export async function GET(req: NextRequest) {
     const format = req.nextUrl.searchParams.get("format");
     if (format === "csv") {
       const csv = [
-        "id,email,source,referrer,confirmed,signed_up",
+        "id,email,source,referrer,confirmed,privacy_accepted,marketing_consent,signed_up",
         ...rows.map(
           (r) =>
-            `${r.id},"${r.email}","${r.source ?? ""}","${r.referrer ?? ""}",${r.confirmed},"${r.signed_up}"`
+            `${r.id},"${r.email}","${r.source ?? ""}","${r.referrer ?? ""}",${r.confirmed},${r.privacy_accepted},${r.marketing_consent},"${r.signed_up}"`
         ),
       ].join("\n");
 

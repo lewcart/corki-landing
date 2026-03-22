@@ -19,12 +19,19 @@ type FormState = "idle" | "loading" | "success" | "error";
 
 export function FinalCTA() {
   const [email, setEmail] = useState("");
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [state, setState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (state === "loading" || state === "success") return;
+    if (!privacyAccepted) {
+      setErrorMsg("Please accept the Privacy Policy to continue.");
+      setState("error");
+      return;
+    }
     setState("loading");
     setErrorMsg("");
 
@@ -36,6 +43,8 @@ export function FinalCTA() {
           email,
           source: "landing_page",
           referrer: document.referrer || undefined,
+          privacyAccepted,
+          marketingConsent,
         }),
       });
 
@@ -139,47 +148,95 @@ export function FinalCTA() {
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="w-full flex flex-col sm:flex-row gap-2"
+              className="w-full flex flex-col gap-3"
             >
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                required
-                disabled={state === "loading"}
-                className="flex-1 px-4 py-3.5 rounded-xl font-[family-name:var(--font-body)] text-sm text-cream placeholder:text-warm-gray focus:outline-none focus:ring-2 focus:ring-amber disabled:opacity-60"
-                style={{
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(163,155,149,0.2)",
-                }}
-              />
-              <button
-                type="submit"
-                disabled={state === "loading"}
-                className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-[family-name:var(--font-body)] font-semibold text-sm text-[#120D0A] transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
-                style={{
-                  background: "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)",
-                  boxShadow: "0 4px 24px rgba(194,123,46,0.4), 0 1px 0 rgba(255,255,255,0.12) inset",
-                }}
-              >
-                {state === "loading" ? (
-                  <>
-                    <svg
-                      className="animate-spin h-4 w-4"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      aria-hidden="true"
+              {/* Email + submit row */}
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  required
+                  disabled={state === "loading"}
+                  className="flex-1 px-4 py-3.5 rounded-xl font-[family-name:var(--font-body)] text-sm text-cream placeholder:text-warm-gray focus:outline-none focus:ring-2 focus:ring-amber disabled:opacity-60"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(163,155,149,0.2)",
+                  }}
+                />
+                <button
+                  type="submit"
+                  disabled={state === "loading"}
+                  className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-[family-name:var(--font-body)] font-semibold text-sm text-[#120D0A] transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                  style={{
+                    background: "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)",
+                    boxShadow: "0 4px 24px rgba(194,123,46,0.4), 0 1px 0 rgba(255,255,255,0.12) inset",
+                  }}
+                >
+                  {state === "loading" ? (
+                    <>
+                      <svg
+                        className="animate-spin h-4 w-4"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                      </svg>
+                      Joining…
+                    </>
+                  ) : (
+                    "Join the Waitlist"
+                  )}
+                </button>
+              </div>
+
+              {/* Consent checkboxes */}
+              <div className="flex flex-col gap-2.5 text-left">
+                {/* Privacy Policy — required */}
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={privacyAccepted}
+                    onChange={(e) => {
+                      setPrivacyAccepted(e.target.checked);
+                      if (state === "error") { setState("idle"); setErrorMsg(""); }
+                    }}
+                    disabled={state === "loading"}
+                    className="mt-0.5 h-4 w-4 shrink-0 rounded accent-amber disabled:opacity-60 cursor-pointer"
+                    aria-required="true"
+                  />
+                  <span className="font-[family-name:var(--font-body)] text-xs leading-relaxed" style={{ color: "rgba(163,155,149,0.85)" }}>
+                    I have read and accept the{" "}
+                    <a
+                      href="/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-2 transition-colors"
+                      style={{ color: "#D4944A" }}
                     >
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                    </svg>
-                    Joining…
-                  </>
-                ) : (
-                  "Join the Waitlist"
-                )}
-              </button>
+                      Privacy Policy
+                    </a>
+                    . <span style={{ color: "rgba(163,155,149,0.5)" }}>(Required)</span>
+                  </span>
+                </label>
+
+                {/* Marketing consent — optional */}
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={marketingConsent}
+                    onChange={(e) => setMarketingConsent(e.target.checked)}
+                    disabled={state === "loading"}
+                    className="mt-0.5 h-4 w-4 shrink-0 rounded accent-amber disabled:opacity-60 cursor-pointer"
+                  />
+                  <span className="font-[family-name:var(--font-body)] text-xs leading-relaxed" style={{ color: "rgba(163,155,149,0.85)" }}>
+                    I&apos;d like to receive product updates and news from Corki. <span style={{ color: "rgba(163,155,149,0.5)" }}>(Optional)</span>
+                  </span>
+                </label>
+              </div>
             </form>
           )}
 
