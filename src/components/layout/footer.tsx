@@ -7,7 +7,7 @@ const footerColumns = [
   {
     heading: null,
     brand: true,
-    tagline: "Your wine friend. Ask anything about wine.",
+    tagline: "Wine's best friend.",
   },
   {
     heading: "Features",

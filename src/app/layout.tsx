@@ -17,19 +17,19 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Corki: Wine's Best Friend",
+  title: "Corki - Personalised Cellar Manager",
   description:
     "Ask anything about wine. Scan any label. Get a real answer.",
   metadataBase: new URL("https://getcorki.com"),
   openGraph: {
-    title: "Corki: Wine's Best Friend",
+    title: "Corki - Personalised Cellar Manager",
     description:
       "Ask anything about wine. Scan any label. Get a real answer.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Corki: Wine's Best Friend",
+    title: "Corki - Personalised Cellar Manager",
     description:
       "Ask anything about wine. Scan any label. Get a real answer.",
   },

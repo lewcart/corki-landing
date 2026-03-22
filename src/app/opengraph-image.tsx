@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Corki: Wine's Best Friend";
+export const alt = "Corki - Personalised Cellar Manager";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -177,7 +177,7 @@ export default async function Image() {
         >
           <div
             style={{
-              fontSize: 36,
+              fontSize: 48,
               fontWeight: 500,
               color: "#F9F6F4",
               letterSpacing: "-0.02em",
@@ -188,10 +188,10 @@ export default async function Image() {
           </div>
           <div
             style={{
-              fontSize: 64,
+              fontSize: 72,
               fontWeight: 500,
               color: "#F9F6F4",
-              lineHeight: 1.15,
+              lineHeight: 1.1,
               fontFamily: '"Playfair Display"',
             }}
           >
