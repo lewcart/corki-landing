@@ -120,7 +120,7 @@ export function HowItWorks() {
                       style={{
                         fontSize: "3rem",
                         fontWeight: 500,
-                        color: "rgba(123,51,70,0.3)",
+                        color: "var(--amber-light)",
                       }}
                       aria-hidden="true"
                     >
