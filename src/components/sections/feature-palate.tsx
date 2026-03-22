@@ -1,7 +1,15 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { Fingerprint, Grape, MapPin, TrendingUp, SlidersHorizontal } from "lucide-react";
+import {
+  Fingerprint,
+  Grape,
+  MapPin,
+  TrendingUp,
+  SlidersHorizontal,
+  ThumbsUp,
+  ThumbsDown,
+} from "lucide-react";
 import { FeatureBadge } from "@/components/ui/feature-badge";
 import { PhoneMockup } from "@/components/ui/phone-mockup";
 
@@ -9,48 +17,49 @@ const bullets = [
   { icon: <Grape size={16} />, text: "Learns your preferred grapes and styles" },
   { icon: <MapPin size={16} />, text: "Picks up on the regions you love" },
   { icon: <TrendingUp size={16} />, text: "Smarter suggestions over time" },
-  { icon: <SlidersHorizontal size={16} />, text: "See what Corki knows, confirm or correct" },
-];
-
-const preferences = [
   {
-    label: "Favourite grape",
-    value: "Shiraz",
-    confidence: "high" as const,
-    source: "confirmed",
-  },
-  {
-    label: "Go-to region",
-    value: "Barossa Valley",
-    confidence: "high" as const,
-    source: "learned",
-  },
-  {
-    label: "Preferred style",
-    value: "Full-bodied reds",
-    confidence: "high" as const,
-    source: "learned",
-  },
-  {
-    label: "Favourite white",
-    value: "Riesling",
-    confidence: "medium" as const,
-    source: "learned",
-  },
-  {
-    label: "Avoids",
-    value: "Oaky Chardonnay",
-    confidence: "medium" as const,
-    source: "confirmed",
-  },
-  {
-    label: "Sweet spot price",
-    value: "$20–$40",
-    confidence: "low" as const,
-    source: "learned",
+    icon: <SlidersHorizontal size={16} />,
+    text: "See what Corki knows, confirm or correct",
   },
 ];
 
+/* ── Spectrum data ──────────────────────────────────────────────── */
+interface SpectrumItem {
+  label: string;
+  options: string[];
+  selected: number; // index of selected option
+}
+
+const spectrums: SpectrumItem[] = [
+  { label: "Body", options: ["Light", "Medium", "Full"], selected: 2 },
+  { label: "Sweetness", options: ["Dry", "Off-dry", "Sweet"], selected: 0 },
+  { label: "Adventure", options: ["Comfort", "Curious", "Explorer"], selected: 1 },
+];
+
+/* ── Preference chips ───────────────────────────────────────────── */
+interface PrefChip {
+  label: string;
+  sentiment: "positive" | "negative";
+  confidence: "high" | "medium";
+}
+
+const stylePrefs: PrefChip[] = [
+  { label: "Cabernet Sauvignon", sentiment: "positive", confidence: "high" },
+  { label: "Shiraz", sentiment: "positive", confidence: "high" },
+  { label: "Pinot Noir", sentiment: "positive", confidence: "medium" },
+  { label: "Riesling", sentiment: "positive", confidence: "medium" },
+  { label: "Oaky Chardonnay", sentiment: "negative", confidence: "high" },
+  { label: "Sweet Moscato", sentiment: "negative", confidence: "medium" },
+];
+
+const regionPrefs: PrefChip[] = [
+  { label: "Barossa Valley", sentiment: "positive", confidence: "high" },
+  { label: "Burgundy", sentiment: "positive", confidence: "high" },
+  { label: "Napa Valley", sentiment: "positive", confidence: "medium" },
+  { label: "Tuscany", sentiment: "positive", confidence: "medium" },
+];
+
+/* ── Animations ─────────────────────────────────────────────────── */
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const fadeUp: Variants = {
@@ -62,18 +71,40 @@ const fadeUp: Variants = {
   }),
 };
 
-function confidenceColor(c: "high" | "medium" | "low") {
-  if (c === "high") return "#7B3346";
-  if (c === "medium") return "#C27B2E";
-  return "#A39B95";
+/* ── Chip component ─────────────────────────────────────────────── */
+function Chip({ chip }: { chip: PrefChip }) {
+  const isPositive = chip.sentiment === "positive";
+  return (
+    <span
+      className="font-body inline-flex items-center gap-1 rounded-full px-2 py-1"
+      style={{
+        fontSize: "9px",
+        fontWeight: 500,
+        background: isPositive
+          ? "rgba(16,185,129,0.08)"
+          : "rgba(244,63,94,0.08)",
+        border: `1px solid ${
+          isPositive ? "rgba(16,185,129,0.2)" : "rgba(244,63,94,0.2)"
+        }`,
+        color: isPositive
+          ? "rgba(16,185,129,0.9)"
+          : "rgba(244,63,94,0.9)",
+      }}
+    >
+      {isPositive ? (
+        <ThumbsUp size={8} />
+      ) : (
+        <ThumbsDown size={8} />
+      )}
+      {chip.label}
+      {chip.confidence === "high" && (
+        <span style={{ fontSize: "7px", opacity: 0.7 }}>✦</span>
+      )}
+    </span>
+  );
 }
 
-function confidenceBg(c: "high" | "medium" | "low") {
-  if (c === "high") return "rgba(123,51,70,0.15)";
-  if (c === "medium") return "rgba(194,123,46,0.12)";
-  return "rgba(163,155,149,0.1)";
-}
-
+/* ── Palate Mockup ──────────────────────────────────────────────── */
 function PalateMockup() {
   return (
     <div
@@ -91,7 +122,8 @@ function PalateMockup() {
             style={{
               width: "28px",
               height: "28px",
-              background: "linear-gradient(135deg, rgba(123,51,70,0.3), rgba(123,51,70,0.1))",
+              background:
+                "linear-gradient(135deg, rgba(123,51,70,0.3), rgba(123,51,70,0.1))",
               border: "1px solid rgba(123,51,70,0.25)",
             }}
           >
@@ -100,80 +132,136 @@ function PalateMockup() {
           <div>
             <p
               className="font-body"
-              style={{ fontSize: "13px", fontWeight: 600, color: "#F9F6F4" }}
+              style={{ fontSize: "12px", fontWeight: 600, color: "#F9F6F4" }}
             >
               My Palate
             </p>
             <p
               className="font-body"
-              style={{ fontSize: "10px", color: "#A39B95" }}
+              style={{ fontSize: "9px", color: "#A39B95" }}
             >
-              {preferences.length} preferences
+              Updated from 23 conversations
             </p>
           </div>
         </div>
       </div>
 
-      {/* Preferences list */}
-      <div className="flex flex-col gap-2 p-3">
-        {preferences.map((pref, i) => (
-          <div
-            key={i}
-            className="rounded-xl p-3 flex items-center justify-between"
+      <div className="flex flex-col gap-4 p-4">
+        {/* Taste summary card */}
+        <div
+          className="rounded-xl p-3"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(123,51,70,0.12) 0%, rgba(194,123,46,0.08) 100%)",
+            border: "1px solid rgba(123,51,70,0.15)",
+          }}
+        >
+          <p
+            className="font-body"
             style={{
-              background: "rgba(249,246,244,0.03)",
-              border: "1px solid rgba(249,246,244,0.06)",
+              fontSize: "10px",
+              lineHeight: 1.6,
+              color: "rgba(249,246,244,0.8)",
             }}
           >
-            <div className="flex flex-col gap-0.5">
+            You gravitate towards{" "}
+            <span style={{ fontWeight: 600, color: "#F9F6F4" }}>
+              bold, full-bodied reds
+            </span>{" "}
+            — especially Cabernet and Shiraz from warm-climate regions. You prefer{" "}
+            <span style={{ fontWeight: 600, color: "#F9F6F4" }}>dry wines</span>{" "}
+            and lean towards Old World when exploring whites.
+          </p>
+        </div>
+
+        {/* Spectrum bars */}
+        <div className="flex flex-col gap-3">
+          {spectrums.map((spec) => (
+            <div key={spec.label}>
               <p
-                className="font-body"
-                style={{ fontSize: "9px", color: "#A39B95", textTransform: "uppercase", letterSpacing: "0.08em" }}
+                className="font-body mb-1.5"
+                style={{
+                  fontSize: "8px",
+                  fontWeight: 600,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: "#A39B95",
+                }}
               >
-                {pref.label}
+                {spec.label}
               </p>
-              <p
-                className="font-body"
-                style={{ fontSize: "12px", fontWeight: 600, color: "#F9F6F4" }}
-              >
-                {pref.value}
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              {pref.source === "learned" && (
-                <span
-                  className="font-body rounded-full px-1.5 py-0.5"
-                  style={{
-                    fontSize: "8px",
-                    color: confidenceColor(pref.confidence),
-                    background: confidenceBg(pref.confidence),
-                    fontWeight: 600,
-                  }}
-                >
-                  AI
-                </span>
-              )}
-              <div className="flex gap-0.5">
-                {["high", "medium", "low"].map((level, j) => (
+              <div className="flex gap-1">
+                {spec.options.map((opt, i) => (
                   <div
-                    key={j}
-                    className="rounded-full"
+                    key={opt}
+                    className="flex-1 rounded-lg py-1.5 text-center font-body"
                     style={{
-                      width: "6px",
-                      height: "6px",
+                      fontSize: "9px",
+                      fontWeight: i === spec.selected ? 600 : 400,
                       background:
-                        (pref.confidence === "high") ||
-                        (pref.confidence === "medium" && j < 2) ||
-                        (pref.confidence === "low" && j < 1)
-                          ? confidenceColor(pref.confidence)
-                          : "rgba(163,155,149,0.15)",
+                        i === spec.selected
+                          ? "linear-gradient(135deg, #7B3346, #5C1F33)"
+                          : "rgba(249,246,244,0.04)",
+                      color:
+                        i === spec.selected
+                          ? "#F9F6F4"
+                          : "rgba(249,246,244,0.35)",
+                      border:
+                        i === spec.selected
+                          ? "1px solid rgba(123,51,70,0.4)"
+                          : "1px solid rgba(249,246,244,0.04)",
+                      transition: "all 0.2s ease",
                     }}
-                  />
+                  >
+                    {opt}
+                  </div>
                 ))}
               </div>
             </div>
+          ))}
+        </div>
+
+        {/* Wine Styles chips */}
+        <div>
+          <p
+            className="font-body mb-2"
+            style={{
+              fontSize: "8px",
+              fontWeight: 600,
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              color: "#A39B95",
+            }}
+          >
+            Wine Styles
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {stylePrefs.map((chip) => (
+              <Chip key={chip.label} chip={chip} />
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* Regions chips */}
+        <div>
+          <p
+            className="font-body mb-2"
+            style={{
+              fontSize: "8px",
+              fontWeight: 600,
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              color: "#A39B95",
+            }}
+          >
+            Regions
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {regionPrefs.map((chip) => (
+              <Chip key={chip.label} chip={chip} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -184,7 +272,7 @@ export function FeaturePalate() {
     <section
       id="feature-palate"
       className="relative section-padding"
-      style={{ background: "#F0EBE6" }}
+      style={{ background: "#1E1511" }}
     >
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
@@ -211,9 +299,7 @@ export function FeaturePalate() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              <FeatureBadge
-                icon={<Fingerprint size={14} />}
-              >
+              <FeatureBadge variant="pro" icon={<Fingerprint size={14} />}>
                 Palate
               </FeatureBadge>
             </motion.div>
@@ -224,7 +310,6 @@ export function FeaturePalate() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              style={{ color: "#120D0A" }}
             >
               Corki learns
               <br />
@@ -239,11 +324,11 @@ export function FeaturePalate() {
               viewport={{ once: true }}
               className="flex flex-col gap-3"
             >
-              <p style={{ color: "#6B6460" }}>
+              <p>
                 No quizzes. No flavour wheels. Just drink what you drink,
                 and Corki picks up the rest.
               </p>
-              <p style={{ color: "#6B6460" }}>
+              <p>
                 Over time they build a picture of your taste. The grapes
                 you reach for, the regions you come back to, the styles that
                 click. Every recommendation gets a little sharper.
@@ -265,14 +350,15 @@ export function FeaturePalate() {
                     style={{
                       width: "32px",
                       height: "32px",
-                      background: "rgba(123,51,70,0.08)",
-                      border: "1px solid rgba(123,51,70,0.15)",
-                      color: "#7B3346",
+                      background: "rgba(194,123,46,0.1)",
+                      border: "1px solid rgba(194,123,46,0.2)",
+                      color: "#C27B2E",
                     }}
                   >
                     {bullet.icon}
                   </span>
-                  <span className="font-body text-sm" style={{ color: "#6B6460" }}>
+                  <span className="font-body text-sm text-smoke"
+                  >
                     {bullet.text}
                   </span>
                 </li>

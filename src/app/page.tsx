@@ -20,8 +20,8 @@ export default function Home() {
       <main>
         <Hero />
         {/* <SocialProof /> */}{/* Removed: no real reviews yet — re-enable when user testimonials are available */}
-        <FeatureScan />
         <FeatureAsk />
+        <FeatureScan />
         <FeatureCellar />
         <FeaturePalate />
         <HowItWorks />
