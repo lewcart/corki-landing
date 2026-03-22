@@ -6,6 +6,7 @@ import { FeatureScan } from "@/components/sections/feature-scan";
 import { FeatureAsk } from "@/components/sections/feature-ask";
 import { FeatureCellar } from "@/components/sections/feature-cellar";
 import { FeaturePalate } from "@/components/sections/feature-palate";
+import { WhyCorki } from "@/components/sections/why-corki";
 import { HowItWorks } from "@/components/sections/how-it-works";
 import { UseCases } from "@/components/sections/use-cases";
 import { Pricing } from "@/components/sections/pricing";
@@ -24,6 +25,7 @@ export default function Home() {
         <FeatureScan />
         <FeatureCellar />
         <FeaturePalate />
+        <WhyCorki />
         <HowItWorks />
         <UseCases />
         <Pricing />

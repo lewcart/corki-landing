@@ -73,7 +73,7 @@ export function PhoneMockup({ children, className }: PhoneMockupProps) {
         >
           {/* Dynamic island / notch */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 z-10"
+            className="absolute left-1/2 -translate-x-1/2 z-50"
             style={{
               top: "10px",
               width: "90px",

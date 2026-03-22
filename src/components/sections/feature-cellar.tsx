@@ -282,25 +282,31 @@ function WineDetailView({ wine, onBack }: { wine: CellarWine; onBack: () => void
       : { bg: "rgba(200,100,130,0.15)", color: "hsl(340,45%,45%)" };
 
   return (
-    <div className="absolute inset-0 flex flex-col" style={{ background: LM.bg, paddingTop: "48px" }}>
-      {/* Hero */}
-      <div className="flex-shrink-0 relative" style={{ height: "140px", background: LM.muted }}>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <Wine size={40} style={{ color: LM.mutedFg, opacity: 0.4 }} />
-        </div>
-        <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${LM.bg} 0%, transparent 60%)` }} />
-        <button onClick={onBack} className="absolute top-3 left-3 rounded-full flex items-center justify-center"
-          style={{ width: "30px", height: "30px", background: "hsla(30,25%,96%,0.7)", backdropFilter: "blur(8px)", cursor: "pointer", border: "none" }}>
-          <ArrowLeft size={14} style={{ color: LM.fg }} />
-        </button>
-        <div className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 font-body"
-          style={{ fontSize: "9px", fontWeight: 600, background: typeBadge.bg, color: typeBadge.color, backdropFilter: "blur(4px)" }}>
-          {wine.type}
+    <div className="absolute inset-0 flex flex-col" style={{ background: LM.bg }}>
+      {/* Fixed back button + badge over scroll */}
+      <div className="absolute top-0 left-0 right-0 z-20" style={{ paddingTop: "48px" }}>
+        <div className="relative px-3 pt-3">
+          <button onClick={onBack} className="absolute top-3 left-3 rounded-full flex items-center justify-center"
+            style={{ width: "30px", height: "30px", background: "hsla(30,25%,96%,0.7)", backdropFilter: "blur(8px)", cursor: "pointer", border: "none" }}>
+            <ArrowLeft size={14} style={{ color: LM.fg }} />
+          </button>
+          <div className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 font-body"
+            style={{ fontSize: "9px", fontWeight: 600, background: typeBadge.bg, color: typeBadge.color, backdropFilter: "blur(4px)" }}>
+            {wine.type}
+          </div>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 min-h-0 overflow-y-auto px-4 -mt-8 relative z-10 pb-4">
+      {/* Scrollable content — image scrolls with it */}
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        {/* Hero image */}
+        <div className="relative" style={{ height: "190px", background: LM.muted }}>
+          <img src={`/wines/${wine.id}.webp`} alt={wine.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${LM.bg} 0%, transparent 60%)` }} />
+        </div>
+
+        {/* Content */}
+        <div className="px-4 -mt-8 relative z-10 pb-4">
         <h3 className="font-heading" style={{ fontSize: "16px", fontWeight: 700, color: LM.fg, lineHeight: 1.2 }}>
           {wine.name} — {wine.year}
         </h3>
@@ -398,6 +404,7 @@ function WineDetailView({ wine, onBack }: { wine: CellarWine; onBack: () => void
           style={{ fontSize: "11px", fontWeight: 600, background: LM.primary, color: LM.primaryFg, border: "none", cursor: "pointer" }}>
           <MessageCircle size={13} /> Ask Corki about this wine
         </button>
+        </div>
       </div>
 
       <Dock active="cellar" />
