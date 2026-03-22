@@ -31,7 +31,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.redirect(new URL("/welcome", req.url));
     }
 
-    return NextResponse.redirect(new URL("/welcome", req.url));
+    const email = rows[0].email as string;
+    const welcomeUrl = new URL("/welcome", req.url);
+    welcomeUrl.searchParams.set("email", email);
+    return NextResponse.redirect(welcomeUrl);
   } catch (err) {
     console.error("Confirmation error:", err);
     return NextResponse.redirect(new URL("/", req.url));
