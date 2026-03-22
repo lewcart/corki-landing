@@ -627,7 +627,7 @@ export function FeatureCellar() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
           <div className="flex flex-col gap-6">
             <motion.div custom={0} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <FeatureBadge>Cellar</FeatureBadge>
+              <FeatureBadge icon={<Wine size={14} />}>Cellar</FeatureBadge>
             </motion.div>
             <motion.h2 custom={1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ color: "#120D0A" }}>
               Every bottle,<br />right where you left it.

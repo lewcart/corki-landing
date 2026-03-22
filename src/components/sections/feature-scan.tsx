@@ -345,7 +345,7 @@ export function FeatureScan() {
 
           <div className="flex flex-col gap-6">
             <motion.div custom={0} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <FeatureBadge variant="pro">Scan</FeatureBadge>
+              <FeatureBadge variant="pro" icon={<Camera size={14} />}>Scan</FeatureBadge>
             </motion.div>
             <motion.h2 custom={1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               Point. Scan. Know.
