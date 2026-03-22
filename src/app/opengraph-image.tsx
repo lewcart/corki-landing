@@ -27,22 +27,69 @@ export default async function Image() {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#120D0A",
+          backgroundImage:
+            "radial-gradient(ellipse 80% 60% at -10% -5%, rgba(123,51,70,0.22) 0%, rgba(18,13,10,0) 60%)",
           position: "relative",
           overflow: "hidden",
-          padding: "80px 100px",
-          gap: 80,
+          padding: "40px 80px",
+          gap: 60,
         }}
       >
+        {/* Grape/vine texture — matches homepage */}
+        <svg
+          width="1200"
+          height="630"
+          viewBox="0 0 1200 630"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            opacity: 0.04,
+          }}
+        >
+          {/* Left vine */}
+          <path
+            d="M-40 80 C 40 40, 80 120, 60 200 C 40 280, 100 320, 80 400 C 60 480, 120 520, 100 600"
+            stroke="#F9F6F4"
+            strokeWidth="1.5"
+            fill="none"
+          />
+          <circle cx="56" cy="160" r="18" fill="#F9F6F4" />
+          <circle cx="44" cy="186" r="14" fill="#F9F6F4" />
+          <circle cx="70" cy="175" r="12" fill="#F9F6F4" />
+          <circle cx="62" cy="202" r="16" fill="#F9F6F4" />
+          {/* Right vine */}
+          <path
+            d="M1240 160 C 1140 120, 1100 220, 1120 300 C 1140 380, 1080 420, 1100 500"
+            stroke="#F9F6F4"
+            strokeWidth="1.5"
+            fill="none"
+          />
+          <circle cx="1120" cy="260" r="16" fill="#F9F6F4" />
+          <circle cx="1108" cy="286" r="13" fill="#F9F6F4" />
+          <circle cx="1132" cy="276" r="11" fill="#F9F6F4" />
+          {/* Bottom cluster */}
+          <path
+            d="M600 620 C 580 590, 620 570, 600 540"
+            stroke="#F9F6F4"
+            strokeWidth="1"
+            fill="none"
+          />
+          <circle cx="600" cy="580" r="10" fill="#F9F6F4" />
+          <circle cx="588" cy="564" r="8" fill="#F9F6F4" />
+          <circle cx="612" cy="568" r="9" fill="#F9F6F4" />
+        </svg>
+
         {/* Ambient glow behind orb */}
         <div
           style={{
             position: "absolute",
-            width: 600,
-            height: 600,
+            width: 500,
+            height: 500,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(123,51,70,0.25) 0%, rgba(123,51,70,0.08) 50%, transparent 75%)",
-            left: 50,
+              "radial-gradient(circle, rgba(123,51,70,0.15) 0%, rgba(123,51,70,0.05) 50%, transparent 75%)",
+            left: 80,
             top: "50%",
             transform: "translateY(-50%)",
             display: "flex",
@@ -53,8 +100,8 @@ export default async function Image() {
         {/* Orb with logo */}
         <div
           style={{
-            width: 340,
-            height: 340,
+            width: 280,
+            height: 280,
             borderRadius: "50%",
             flexShrink: 0,
             position: "relative",
@@ -64,7 +111,7 @@ export default async function Image() {
             background:
               "radial-gradient(circle at 40% 35%, rgba(194,123,46,0.35) 0%, #7B3346 25%, #5C1F33 55%, #3A1020 80%, #1E0A14 100%)",
             boxShadow:
-              "0 0 50px rgba(123,51,70,0.5), 0 0 100px rgba(123,51,70,0.2), inset 0 1px 0 rgba(255,255,255,0.06)",
+              "0 0 40px rgba(123,51,70,0.4), 0 0 80px rgba(123,51,70,0.15), inset 0 1px 0 rgba(255,255,255,0.06)",
           }}
         >
           {/* Inner amber/gold glow */}
@@ -82,13 +129,14 @@ export default async function Image() {
             }}
           />
 
-          {/* Logo */}
+          {/* Logo — scaled & offset to match homepage orb */}
           <svg
-            width="272"
-            height="272"
+            width="190"
+            height="190"
             viewBox="0 0 1024 1024"
             style={{
               position: "relative",
+              marginLeft: "3%",
               filter:
                 "drop-shadow(0 0 6px rgba(255,255,255,0.2)) drop-shadow(0 0 14px rgba(255,255,255,0.08))",
             }}
@@ -124,11 +172,23 @@ export default async function Image() {
             flexDirection: "column",
             justifyContent: "center",
             flex: 1,
+            gap: 16,
           }}
         >
           <div
             style={{
-              fontSize: 72,
+              fontSize: 36,
+              fontWeight: 500,
+              color: "#F9F6F4",
+              letterSpacing: "-0.02em",
+              fontFamily: '"Playfair Display"',
+            }}
+          >
+            Corki
+          </div>
+          <div
+            style={{
+              fontSize: 64,
               fontWeight: 500,
               color: "#F9F6F4",
               lineHeight: 1.15,

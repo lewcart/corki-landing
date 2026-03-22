@@ -112,8 +112,8 @@ export function Hero() {
           className="mb-6 font-[family-name:var(--font-heading)]"
         >
           Wine&apos;s best
-          <br />
-          friend.
+          <br className="md:hidden" />
+          {" "}friend.
         </motion.h1>
 
         {/* Subheading */}

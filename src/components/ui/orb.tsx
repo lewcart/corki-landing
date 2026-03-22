@@ -136,6 +136,7 @@ export function Orb({ size = "md", className }: OrbProps) {
         <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-full">
           {/* Soft float (4s, out of phase with 3s orb pulse) */}
           <motion.div
+            initial={{ x: "3%" }}
             animate={{ y: [-2, 2, -2] }}
             transition={{
               duration: 4,
@@ -168,10 +169,10 @@ export function Orb({ size = "md", className }: OrbProps) {
                 style={{ filter: "brightness(0) invert(1)" }}
                 className={cn(
                   "select-none pointer-events-none",
-                  size === "sm" && "w-16 h-16",
-                  size === "md" && "w-[128px] h-[128px]",
-                  size === "lg" && "w-[224px] h-[224px]",
-                  size === "hero" && "w-[224px] h-[224px] md:w-[320px] md:h-[320px]",
+                  size === "sm" && "w-[52px] h-[52px]",
+                  size === "md" && "w-[104px] h-[104px]",
+                  size === "lg" && "w-[182px] h-[182px]",
+                  size === "hero" && "w-[182px] h-[182px] md:w-[259px] md:h-[259px]",
                 )}
                 draggable={false}
                 priority
