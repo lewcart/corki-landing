@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Platform = "ios" | "android" | "desktop" | null;
 
@@ -19,11 +19,10 @@ interface WalletButtonsProps {
 }
 
 export function WalletButtons({ appleEnabled, googleEnabled }: WalletButtonsProps) {
-  const [platform, setPlatform] = useState<Platform>(null);
-
-  useEffect(() => {
-    setPlatform(detectPlatform());
-  }, []);
+  const [platform] = useState<Platform>(() => {
+    if (typeof window === "undefined") return null;
+    return detectPlatform();
+  });
 
   // Don't render until we know the platform (avoids flicker)
   if (platform === null) return null;

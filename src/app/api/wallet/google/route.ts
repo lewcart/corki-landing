@@ -26,7 +26,7 @@ function signJwt(payload: object, privateKey: string): string {
   return `${unsigned}.${sig}`;
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   const missing = missingVars();
   if (missing.length > 0) {
     return NextResponse.json(

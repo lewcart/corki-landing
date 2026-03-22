@@ -40,12 +40,15 @@ vi.mock("passkit-generator", () => ({
 }));
 
 import { GET } from "./route";
+import { NextRequest } from "next/server";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const makeReq = (url: string): any => {
-  const { NextRequest } = require("next/server");
-  return new NextRequest(url);
-};
+interface MockJsonResponse {
+  _type: string;
+  data: Record<string, unknown>;
+  status: number;
+}
+
+const makeReq = (url: string) => new NextRequest(url);
 
 const APPLE_ENV = {
   APPLE_TEAM_ID: "TEAMID123",
@@ -76,18 +79,18 @@ describe("GET /api/wallet/apple", () => {
   it("returns 503 when Apple Wallet env vars are missing", async () => {
     const req = makeReq("http://localhost/api/wallet/apple");
     const res = await GET(req);
-    expect((res as any).status).toBe(503);
-    expect((res as any).data.error).toBe("Apple Wallet not configured");
-    expect((res as any).data.missing).toContain("APPLE_TEAM_ID");
+    expect((res as MockJsonResponse).status).toBe(503);
+    expect((res as MockJsonResponse).data.error).toBe("Apple Wallet not configured");
+    expect((res as MockJsonResponse).data.missing).toContain("APPLE_TEAM_ID");
   });
 
   it("returns 503 listing only the vars that are missing", async () => {
     process.env.APPLE_TEAM_ID = "TEAMID";
     const req = makeReq("http://localhost/api/wallet/apple");
     const res = await GET(req);
-    expect((res as any).status).toBe(503);
-    expect((res as any).data.missing).not.toContain("APPLE_TEAM_ID");
-    expect((res as any).data.missing).toContain("APPLE_PASS_TYPE_ID");
+    expect((res as MockJsonResponse).status).toBe(503);
+    expect((res as MockJsonResponse).data.missing).not.toContain("APPLE_TEAM_ID");
+    expect((res as MockJsonResponse).data.missing).toContain("APPLE_PASS_TYPE_ID");
   });
 
   it("returns 500 when PKPass throws an error", async () => {
@@ -95,8 +98,8 @@ describe("GET /api/wallet/apple", () => {
     mockGetAsBuffer.mockRejectedValueOnce(new Error("signing failed"));
     const req = makeReq("http://localhost/api/wallet/apple");
     const res = await GET(req);
-    expect((res as any).status).toBe(500);
-    expect((res as any).data.error).toBe("Failed to generate pass");
+    expect((res as MockJsonResponse).status).toBe(500);
+    expect((res as MockJsonResponse).data.error).toBe("Failed to generate pass");
   });
 
   it("returns pkpass with correct content-type on success", async () => {

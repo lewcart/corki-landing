@@ -30,12 +30,16 @@ vi.mock("@neondatabase/serverless", () => ({
 }));
 
 import { GET } from "./route";
+import { NextRequest } from "next/server";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const makeReq = (url: string): any => {
-  const { NextRequest } = require("next/server");
-  return new NextRequest(url);
-};
+interface MockResponse {
+  _type: string;
+  data?: Record<string, unknown>;
+  status?: number;
+  location?: string;
+}
+
+const makeReq = (url: string) => new NextRequest(url);
 
 describe("GET /api/confirm", () => {
   beforeEach(() => {
@@ -46,41 +50,41 @@ describe("GET /api/confirm", () => {
   it("redirects to / when no token is provided", async () => {
     const req = makeReq("http://localhost/api/confirm");
     const res = await GET(req);
-    expect((res as any)._type).toBe("redirect");
-    expect((res as any).location).toBe("http://localhost/");
+    expect((res as MockResponse)._type).toBe("redirect");
+    expect((res as MockResponse).location).toBe("http://localhost/");
   });
 
   it("redirects to /welcome?email= on successful confirmation", async () => {
     mockSql.mockResolvedValueOnce([{ email: "test@example.com" }]);
     const req = makeReq("http://localhost/api/confirm?token=valid-token");
     const res = await GET(req);
-    expect((res as any)._type).toBe("redirect");
-    expect((res as any).location).toContain("/welcome");
-    expect((res as any).location).toContain("email=");
-    expect((res as any).location).toContain("example.com");
+    expect((res as MockResponse)._type).toBe("redirect");
+    expect((res as MockResponse).location).toContain("/welcome");
+    expect((res as MockResponse).location).toContain("email=");
+    expect((res as MockResponse).location).toContain("example.com");
   });
 
   it("redirects to /welcome when token is already used or not found", async () => {
     mockSql.mockResolvedValueOnce([]);
     const req = makeReq("http://localhost/api/confirm?token=used-token");
     const res = await GET(req);
-    expect((res as any)._type).toBe("redirect");
-    expect((res as any).location).toBe("http://localhost/welcome");
+    expect((res as MockResponse)._type).toBe("redirect");
+    expect((res as MockResponse).location).toBe("http://localhost/welcome");
   });
 
   it("redirects to / on database error", async () => {
     mockSql.mockRejectedValueOnce(new Error("DB connection failed"));
     const req = makeReq("http://localhost/api/confirm?token=any");
     const res = await GET(req);
-    expect((res as any)._type).toBe("redirect");
-    expect((res as any).location).toBe("http://localhost/");
+    expect((res as MockResponse)._type).toBe("redirect");
+    expect((res as MockResponse).location).toBe("http://localhost/");
   });
 
   it("redirects to / when STORAGE_DATABASE_URL is not set", async () => {
     delete process.env.STORAGE_DATABASE_URL;
     const req = makeReq("http://localhost/api/confirm?token=any");
     const res = await GET(req);
-    expect((res as any)._type).toBe("redirect");
-    expect((res as any).location).toBe("http://localhost/");
+    expect((res as MockResponse)._type).toBe("redirect");
+    expect((res as MockResponse).location).toBe("http://localhost/");
   });
 });

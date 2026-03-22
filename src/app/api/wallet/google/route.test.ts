@@ -24,12 +24,16 @@ vi.mock("next/server", () => ({
 }));
 
 import { GET } from "./route";
+import { NextRequest } from "next/server";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const makeReq = (url: string): any => {
-  const { NextRequest } = require("next/server");
-  return new NextRequest(url);
-};
+interface MockResponse {
+  _type?: string;
+  data?: Record<string, unknown>;
+  status?: number;
+  location?: string;
+}
+
+const makeReq = (url: string) => new NextRequest(url);
 
 // Generate a real RSA key pair for JWT signing tests
 const { privateKey } = crypto.generateKeyPairSync("rsa", {
@@ -69,18 +73,18 @@ describe("GET /api/wallet/google", () => {
   it("returns 503 when Google Wallet env vars are missing", async () => {
     const req = makeReq("http://localhost/api/wallet/google");
     const res = await GET(req);
-    expect((res as any).status).toBe(503);
-    expect((res as any).data.error).toBe("Google Wallet not configured");
-    expect((res as any).data.missing).toContain("GOOGLE_ISSUER_ID");
+    expect((res as MockResponse).status).toBe(503);
+    expect((res as MockResponse).data.error).toBe("Google Wallet not configured");
+    expect((res as MockResponse).data.missing).toContain("GOOGLE_ISSUER_ID");
   });
 
   it("returns 503 listing only the vars that are missing", async () => {
     process.env.GOOGLE_ISSUER_ID = "123";
     const req = makeReq("http://localhost/api/wallet/google");
     const res = await GET(req);
-    expect((res as any).status).toBe(503);
-    expect((res as any).data.missing).not.toContain("GOOGLE_ISSUER_ID");
-    expect((res as any).data.missing).toContain("GOOGLE_CLASS_ID");
+    expect((res as MockResponse).status).toBe(503);
+    expect((res as MockResponse).data.missing).not.toContain("GOOGLE_ISSUER_ID");
+    expect((res as MockResponse).data.missing).toContain("GOOGLE_CLASS_ID");
   });
 
   it("returns 500 when service account key is invalid JSON", async () => {
@@ -90,16 +94,16 @@ describe("GET /api/wallet/google", () => {
       Buffer.from("not-valid-json").toString("base64");
     const req = makeReq("http://localhost/api/wallet/google");
     const res = await GET(req);
-    expect((res as any).status).toBe(500);
-    expect((res as any).data.error).toBe("Failed to generate Google Wallet pass");
+    expect((res as MockResponse).status).toBe(500);
+    expect((res as MockResponse).data.error).toBe("Failed to generate Google Wallet pass");
   });
 
   it("redirects to Google pay save URL on success", async () => {
     Object.assign(process.env, GOOGLE_ENV);
     const req = makeReq("http://localhost/api/wallet/google");
     const res = await GET(req);
-    expect((res as any)._type).toBe("redirect");
-    expect((res as any).location).toMatch(
+    expect((res as MockResponse)._type).toBe("redirect");
+    expect((res as MockResponse).location).toMatch(
       /^https:\/\/pay\.google\.com\/gp\/v\/save\//
     );
   });
@@ -108,7 +112,7 @@ describe("GET /api/wallet/google", () => {
     Object.assign(process.env, GOOGLE_ENV);
     const req = makeReq("http://localhost/api/wallet/google");
     const res = await GET(req);
-    const saveUrl: string = (res as any).location;
+    const saveUrl: string = (res as MockResponse).location!;
     const token = saveUrl.replace("https://pay.google.com/gp/v/save/", "");
     const parts = token.split(".");
     expect(parts).toHaveLength(3);
@@ -120,7 +124,7 @@ describe("GET /api/wallet/google", () => {
     const req = makeReq("http://localhost/api/wallet/google");
     const res = await GET(req);
     // Redirect should succeed (promo code is embedded in the JWT payload)
-    expect((res as any)._type).toBe("redirect");
+    expect((res as MockResponse)._type).toBe("redirect");
   });
 
   it("uses default promo code CORKIFRIEND when PROMO_CODE is not set", async () => {
@@ -128,6 +132,6 @@ describe("GET /api/wallet/google", () => {
     delete process.env.PROMO_CODE;
     const req = makeReq("http://localhost/api/wallet/google");
     const res = await GET(req);
-    expect((res as any)._type).toBe("redirect");
+    expect((res as MockResponse)._type).toBe("redirect");
   });
 });

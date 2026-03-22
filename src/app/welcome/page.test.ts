@@ -70,6 +70,6 @@ describe("WelcomePage", () => {
   it("returns a React element (JSX) with correct root type", () => {
     const element = WelcomePage();
     // Root element should be a <main>
-    expect((element as any).type).toBe("main");
+    expect((element as { type: string }).type).toBe("main");
   });
 });

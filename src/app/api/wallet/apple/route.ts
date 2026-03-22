@@ -20,7 +20,7 @@ function loadImage(filename: string): Buffer {
   return fs.readFileSync(imgPath);
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   const missing = missingVars();
   if (missing.length > 0) {
     return NextResponse.json(
