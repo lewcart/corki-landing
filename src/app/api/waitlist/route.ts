@@ -1,5 +1,8 @@
 import { neon } from "@neondatabase/serverless";
 import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
+import crypto from "crypto";
+import { buildConfirmationEmail } from "@/lib/email-template";
 
 function getDb() {
   const url = process.env.STORAGE_DATABASE_URL;
@@ -9,13 +12,38 @@ function getDb() {
 
 const CREATE_TABLE_SQL = `
   CREATE TABLE IF NOT EXISTS waitlist_signups (
-    id        SERIAL PRIMARY KEY,
-    email     TEXT NOT NULL UNIQUE,
-    source    TEXT,
-    referrer  TEXT,
-    signed_up TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    id            SERIAL PRIMARY KEY,
+    email         TEXT NOT NULL UNIQUE,
+    source        TEXT,
+    referrer      TEXT,
+    confirmed     BOOLEAN NOT NULL DEFAULT FALSE,
+    confirm_token TEXT,
+    signed_up     TIMESTAMPTZ NOT NULL DEFAULT NOW()
   )
 `;
+
+const MIGRATE_SQL = `
+  DO $$
+  BEGIN
+    IF NOT EXISTS (
+      SELECT 1 FROM information_schema.columns
+      WHERE table_name = 'waitlist_signups' AND column_name = 'confirmed'
+    ) THEN
+      ALTER TABLE waitlist_signups ADD COLUMN confirmed BOOLEAN NOT NULL DEFAULT FALSE;
+      ALTER TABLE waitlist_signups ADD COLUMN confirm_token TEXT;
+    END IF;
+  END $$;
+`;
+
+function getResend() {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) throw new Error("RESEND_API_KEY is not set");
+  return new Resend(key);
+}
+
+function getBaseUrl() {
+  return process.env.NEXT_PUBLIC_BASE_URL || "https://corki.app";
+}
 
 // POST /api/waitlist — public email capture
 export async function POST(req: NextRequest) {
@@ -40,12 +68,45 @@ export async function POST(req: NextRequest) {
   try {
     const sql = getDb();
     await sql.query(CREATE_TABLE_SQL);
+    await sql.query(MIGRATE_SQL);
 
-    await sql`
-      INSERT INTO waitlist_signups (email, source, referrer)
-      VALUES (${email}, ${source ?? null}, ${referrer ?? null})
-      ON CONFLICT (email) DO NOTHING
+    const token = crypto.randomUUID();
+
+    // Check if already signed up
+    const existing = await sql`
+      SELECT confirmed FROM waitlist_signups WHERE email = ${email}
     `;
+
+    if (existing.length > 0 && existing[0].confirmed) {
+      // Already confirmed — silently succeed
+      return NextResponse.json({ ok: true }, { status: 200 });
+    }
+
+    if (existing.length > 0) {
+      // Exists but unconfirmed — update token and resend
+      await sql`
+        UPDATE waitlist_signups
+        SET confirm_token = ${token}
+        WHERE email = ${email}
+      `;
+    } else {
+      // New signup
+      await sql`
+        INSERT INTO waitlist_signups (email, source, referrer, confirm_token)
+        VALUES (${email}, ${source ?? null}, ${referrer ?? null}, ${token})
+      `;
+    }
+
+    // Send confirmation email
+    const confirmUrl = `${getBaseUrl()}/api/confirm?token=${token}`;
+    const resend = getResend();
+    await resend.emails.send({
+      from: "Corki <noreply@corki.app>",
+      to: email,
+      subject: "Confirm your spot on the Corki waitlist",
+      html: buildConfirmationEmail(confirmUrl, getBaseUrl()),
+      text: `Confirm your spot on the Corki waitlist!\n\nClick the link below to confirm your email:\n${confirmUrl}\n\nIf you didn't sign up, you can ignore this email.`,
+    });
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (err) {
@@ -67,7 +128,7 @@ export async function GET(req: NextRequest) {
     await sql.query(CREATE_TABLE_SQL);
 
     const rows = await sql`
-      SELECT id, email, source, referrer, signed_up
+      SELECT id, email, source, referrer, confirmed, signed_up
       FROM waitlist_signups
       ORDER BY signed_up DESC
     `;
@@ -75,10 +136,10 @@ export async function GET(req: NextRequest) {
     const format = req.nextUrl.searchParams.get("format");
     if (format === "csv") {
       const csv = [
-        "id,email,source,referrer,signed_up",
+        "id,email,source,referrer,confirmed,signed_up",
         ...rows.map(
           (r) =>
-            `${r.id},"${r.email}","${r.source ?? ""}","${r.referrer ?? ""}","${r.signed_up}"`
+            `${r.id},"${r.email}","${r.source ?? ""}","${r.referrer ?? ""}",${r.confirmed},"${r.signed_up}"`
         ),
       ].join("\n");
 

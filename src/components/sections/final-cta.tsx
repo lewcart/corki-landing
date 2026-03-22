@@ -128,10 +128,12 @@ export function FinalCTA() {
               }}
             >
               <span className="text-amber-light font-[family-name:var(--font-heading)] text-xl">
-                You&apos;re on the list!
+                Check your inbox!
               </span>
               <span className="text-smoke font-[family-name:var(--font-body)] text-sm">
-                We&apos;ll let you know the moment Corki is ready.
+                We&apos;ve sent a confirmation link to verify your email.
+                <br />
+                Click it to secure your spot on the waitlist.
               </span>
             </div>
           ) : (
