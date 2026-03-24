@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Accordion,
   AccordionItem,
@@ -65,9 +66,9 @@ const faqs: { question: string; answer: React.ReactNode }[] = [
     answer: (
       <>
         iOS only for now — iPhone and iPad. Android and web versions are in development.{" "}
-        <a href="/#waitlist" className="underline" style={{ color: "#D4944A" }}>
+        <Link href="/#waitlist" className="underline" style={{ color: "#D4944A" }}>
           Join the waitlist
-        </a>{" "}
+        </Link>{" "}
         to be notified when they&apos;re available.
       </>
     ),
