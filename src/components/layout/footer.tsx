@@ -30,6 +30,7 @@ const footerColumns = [
   {
     heading: "Contact",
     links: [
+      { label: "Support", href: "/support" },
       { label: "Instagram", href: "https://instagram.com/getcorki", external: true },
     ],
   },
