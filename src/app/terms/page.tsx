@@ -36,16 +36,16 @@ export default function TermsPage() {
         </p>
       </Section>
 
-      <Section heading="5. Free Tier and Corki Pro">
+      <Section heading="5. Free Tier and Corki Friend">
         <SubSection heading="5.1 Free Tier">
           <p>
             New users receive 10 free messages without registration. Free-tier access may be limited or discontinued at any time.
           </p>
         </SubSection>
 
-        <SubSection heading="5.2 Corki Pro Subscription">
+        <SubSection heading="5.2 Corki Friend Subscription">
           <p>
-            Corki Pro is an auto-renewing subscription that unlocks unlimited conversations, label scans, cellar management, full chat history, and premium themes. Pricing is AUD $5.99/month or AUD $49.99/year.
+            Corki Friend is an auto-renewing subscription that unlocks unlimited conversations, label scans, cellar management, full chat history, and premium themes. Pricing is AUD $5.99/month or AUD $49.99/year.
           </p>
         </SubSection>
 

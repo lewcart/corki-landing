@@ -13,6 +13,7 @@ interface PricingCardProps {
   billingNote?: string;
   features: PricingFeature[];
   highlighted?: boolean;
+  comingSoon?: boolean;
   ctaText: string;
   ctaHref?: string;
   className?: string;
@@ -25,6 +26,7 @@ export function PricingCard({
   billingNote,
   features,
   highlighted = false,
+  comingSoon = false,
   ctaText,
   ctaHref = "#",
   className,
@@ -32,7 +34,9 @@ export function PricingCard({
   return (
     <div
       className={cn(
-        "relative flex flex-col h-full rounded-2xl p-7 transition-transform duration-300 hover:-translate-y-1",
+        "relative flex flex-col h-full rounded-2xl p-7 transition-transform duration-300",
+        !comingSoon && "hover:-translate-y-1",
+        comingSoon && "opacity-80",
         className
       )}
       style={
@@ -43,6 +47,13 @@ export function PricingCard({
               border: "1px solid rgba(194,123,46,0.35)",
               boxShadow:
                 "0 0 0 1px rgba(194,123,46,0.1), 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(194,123,46,0.08)",
+            }
+          : comingSoon
+          ? {
+              background:
+                "linear-gradient(160deg, rgba(20,18,28,0.7) 0%, rgba(14,12,20,0.8) 100%)",
+              border: "1px solid rgba(120,90,180,0.2)",
+              boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
             }
           : {
               background:
@@ -63,6 +74,18 @@ export function PricingCard({
           Best Value
         </div>
       )}
+      {comingSoon && (
+        <div
+          className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full ui-label"
+          style={{
+            background: "rgba(120,90,180,0.2)",
+            border: "1px solid rgba(120,90,180,0.35)",
+            color: "#B8A0E8",
+          }}
+        >
+          Coming Soon
+        </div>
+      )}
 
       {/* Plan name */}
       <div className="mb-1">
@@ -73,7 +96,7 @@ export function PricingCard({
       <div className="flex items-end gap-1.5 mb-1">
         <span
           className="font-heading text-4xl font-medium"
-          style={{ color: highlighted ? "#D4944A" : "#F9F6F4" }}
+          style={{ color: highlighted ? "#D4944A" : comingSoon ? "#9A80D0" : "#F9F6F4" }}
         >
           {price}
         </span>
@@ -103,6 +126,8 @@ export function PricingCard({
                   ? {
                       background: highlighted
                         ? "rgba(194,123,46,0.2)"
+                        : comingSoon
+                        ? "rgba(120,90,180,0.2)"
                         : "rgba(123,51,70,0.2)",
                     }
                   : {
@@ -113,7 +138,7 @@ export function PricingCard({
               {feature.included ? (
                 <Check
                   className="w-2.5 h-2.5"
-                  style={{ color: highlighted ? "#D4944A" : "#9C4B61" }}
+                  style={{ color: highlighted ? "#D4944A" : comingSoon ? "#9A80D0" : "#9C4B61" }}
                 />
               ) : (
                 <X className="w-2.5 h-2.5 text-warm-gray" />
@@ -132,28 +157,41 @@ export function PricingCard({
       </ul>
 
       {/* CTA */}
-      <a
-        href={ctaHref}
-        className={cn(
-          "block w-full text-center py-3.5 rounded-xl text-sm font-medium font-body transition-all duration-200",
-          "hover:opacity-90 active:scale-[0.98]"
-        )}
-        style={
-          highlighted
-            ? {
-                background: "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)",
-                color: "#120D0A",
-                boxShadow: "0 4px 20px rgba(194,123,46,0.35)",
-              }
-            : {
-                background: "rgba(123,51,70,0.25)",
-                border: "1px solid rgba(123,51,70,0.3)",
-                color: "#F9F6F4",
-              }
-        }
-      >
-        {ctaText}
-      </a>
+      {comingSoon ? (
+        <span
+          className="block w-full text-center py-3.5 rounded-xl text-sm font-medium font-body cursor-not-allowed"
+          style={{
+            background: "rgba(120,90,180,0.12)",
+            border: "1px solid rgba(120,90,180,0.2)",
+            color: "#6B5FA0",
+          }}
+        >
+          {ctaText}
+        </span>
+      ) : (
+        <a
+          href={ctaHref}
+          className={cn(
+            "block w-full text-center py-3.5 rounded-xl text-sm font-medium font-body transition-all duration-200",
+            "hover:opacity-90 active:scale-[0.98]"
+          )}
+          style={
+            highlighted
+              ? {
+                  background: "linear-gradient(135deg, #D4944A 0%, #C27B2E 100%)",
+                  color: "#120D0A",
+                  boxShadow: "0 4px 20px rgba(194,123,46,0.35)",
+                }
+              : {
+                  background: "rgba(123,51,70,0.25)",
+                  border: "1px solid rgba(123,51,70,0.3)",
+                  color: "#F9F6F4",
+                }
+          }
+        >
+          {ctaText}
+        </a>
+      )}
     </div>
   );
 }

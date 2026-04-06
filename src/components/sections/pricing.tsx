@@ -25,12 +25,19 @@ const freeFeatures: PricingFeature[] = [
   { text: "Unlimited scans", included: false },
 ];
 
-const proFeatures: PricingFeature[] = [
+const friendFeatures: PricingFeature[] = [
   { text: "Unlimited messages & scans", included: true },
   { text: "Full chat history", included: true },
   { text: "Cellar management", included: true },
   { text: "My Palate: Corki learns your taste", included: true },
   { text: "All 7 premium themes", included: true },
+];
+
+const bestieFeatures: PricingFeature[] = [
+  { text: "Everything in Friend", included: true },
+  { text: "Priority support", included: true },
+  { text: "Early access to new features", included: true },
+  { text: "Exclusive Bestie themes", included: true },
 ];
 
 export function Pricing() {
@@ -51,7 +58,7 @@ export function Pricing() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 flex flex-col items-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 flex flex-col items-center px-6 max-w-5xl mx-auto">
         {/* Badge */}
         <motion.div
           custom={0}
@@ -153,7 +160,7 @@ export function Pricing() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeUp}
-          className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full"
+          className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full"
         >
           {/* Free card */}
           <PricingCard
@@ -165,16 +172,26 @@ export function Pricing() {
             ctaHref="#waitlist"
           />
 
-          {/* Pro card */}
+          {/* Friend card */}
           <PricingCard
             name="Corki Friend"
             price={isAnnual ? "$4.17" : "$5.99"}
             period="/ month"
             billingNote={isAnnual ? "Billed yearly at $49.99" : undefined}
-            features={proFeatures}
+            features={friendFeatures}
             highlighted={true}
             ctaText="Join the Waitlist"
             ctaHref="#waitlist"
+          />
+
+          {/* Bestie card */}
+          <PricingCard
+            name="Corki Bestie"
+            price="TBA"
+            features={bestieFeatures}
+            highlighted={false}
+            comingSoon={true}
+            ctaText="Not yet available"
           />
         </motion.div>
 
